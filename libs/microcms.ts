@@ -51,7 +51,7 @@ export const client = createClient({
 export const getList = async (queries?: MicroCMSQueries) => {
   const listData = await client
     .getList<Blog>({
-      endpoint: 'blog',
+      endpoint: 'items',
       queries,
     })
     .catch(notFound);
@@ -62,7 +62,7 @@ export const getList = async (queries?: MicroCMSQueries) => {
 export const getDetail = async (contentId: string, queries?: MicroCMSQueries) => {
   const detailData = await client
     .getListDetail<Blog>({
-      endpoint: 'blog',
+      endpoint: 'items',
       contentId,
       queries,
     })
