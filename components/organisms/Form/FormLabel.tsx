@@ -4,6 +4,6 @@ type FormLabelProps = RadixFormLabelProps & React.RefAttributes<HTMLLabelElement
 
 export const FormLabel: React.FC<FormLabelProps> = (props) => {
     return (
-        <Label {...props} />
+        <Label className="text-sm" {...props} />
     )
 }
