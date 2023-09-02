@@ -21,6 +21,7 @@
     "node": ">=18.x"
   },
   "dependencies": {
+    "@radix-ui/react-form": "^0.0.3",
     "@types/cheerio": "^0.22.31",
     "@types/node": "18.15.3",
     "@types/react": "18.0.28",
