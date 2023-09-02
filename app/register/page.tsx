@@ -4,83 +4,96 @@ import { Button } from "@/components/atoms/Button";
 import { ImageInput } from "@/components/atoms/ImageInput";
 import { TextArea } from "@/components/atoms/TextArea";
 import { TextInput } from "@/components/atoms/TextInput";
-import Form from "@/components/organisms/Form";
+import { FormControl } from "@/components/organisms/Form/FormControl";
+import { FormField } from "@/components/organisms/Form/FormField";
+import { FormLabel } from "@/components/organisms/Form/FormLabel";
+import { FormMessage } from "@/components/organisms/Form/FormMessage";
+import { FormRoot } from "@/components/organisms/Form/FormRoot";
+import { FormSubmit } from "@/components/organisms/Form/FormSubmit";
+import { FormEventHandler } from "react";
 
-export default function Register() {
+export default async function Register() {
+    const onSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
+        const data = Object.fromEntries(new FormData(e.currentTarget))
+        e.preventDefault()
+        const res = await fetch("/api/items/create", { method: "POST", body: JSON.stringify(data) })
+        await res.json()
+    }
+
     return (
         <div>
             <h1 className="text-xl font-bold">出品する</h1>
-            <Form>
+            <FormRoot onSubmit={onSubmit}>
                 <div className="mt-10">
                     <h2 className="text-lg font-bold">商品情報</h2>
                     <div className="mt-4 flex flex-col gap-10">
-                        <Form.Field name="image">
-                            <Form.Label>商品画像</Form.Label>
-                            <Form.Control asChild>
+                        <FormField name="image">
+                            <FormLabel>商品画像</FormLabel>
+                            <FormControl asChild>
                                 <ImageInput required />
-                            </Form.Control>
-                            <Form.Message match="valueMissing">
+                            </FormControl>
+                            <FormMessage match="valueMissing">
                                 画像を添付してください
-                            </Form.Message>
-                        </Form.Field>
-                        <Form.Field name="title">
-                            <Form.Label>タイトル</Form.Label>
-                            <Form.Control asChild>
+                            </FormMessage>
+                        </FormField>
+                        <FormField name="title">
+                            <FormLabel>タイトル</FormLabel>
+                            <FormControl asChild>
                                 <TextInput required />
-                            </Form.Control>
-                            <Form.Message match="valueMissing">
+                            </FormControl>
+                            <FormMessage match="valueMissing">
                                 タイトルを入力してください
-                            </Form.Message>
-                        </Form.Field>
-                        <Form.Field name="description">
-                            <Form.Label>説明</Form.Label>
-                            <Form.Control asChild>
+                            </FormMessage>
+                        </FormField>
+                        <FormField name="description">
+                            <FormLabel>説明</FormLabel>
+                            <FormControl asChild>
                                 <TextArea required />
-                            </Form.Control>
-                            <Form.Message match="valueMissing">
+                            </FormControl>
+                            <FormMessage match="valueMissing">
                                 説明を入力してください
-                            </Form.Message>
-                        </Form.Field>
+                            </FormMessage>
+                        </FormField>
                     </div>
                 </div>
                 <div className="mt-20">
                     <h2 className="text-lg font-bold">出品者情報</h2>
                     <div className="mt-4 flex flex-col gap-10">
-                        <Form.Field name="name">
-                            <Form.Label>名前</Form.Label>
-                            <Form.Control asChild>
+                        <FormField name="name">
+                            <FormLabel>名前</FormLabel>
+                            <FormControl asChild>
                                 <TextInput required />
-                            </Form.Control>
-                            <Form.Message match="valueMissing">
+                            </FormControl>
+                            <FormMessage match="valueMissing">
                                 名前を入力してください
-                            </Form.Message>
-                        </Form.Field>
-                        <Form.Field name="email">
-                            <Form.Label>メールアドレス</Form.Label>
-                            <Form.Control asChild>
+                            </FormMessage>
+                        </FormField>
+                        <FormField name="email">
+                            <FormLabel>メールアドレス</FormLabel>
+                            <FormControl asChild>
                                 <TextInput type="email" required />
-                            </Form.Control>
-                            <Form.Message match="valueMissing">
+                            </FormControl>
+                            <FormMessage match="valueMissing">
                                 メールアドレスを入力してください
-                            </Form.Message>
-                            <Form.Message match="typeMismatch">メールアドレスの形式が誤っています</Form.Message>
-                        </Form.Field>
-                        <Form.Field name="tel">
-                            <Form.Label>電話番号</Form.Label>
-                            <Form.Control asChild>
+                            </FormMessage>
+                            <FormMessage match="typeMismatch">メールアドレスの形式が誤っています</FormMessage>
+                        </FormField>
+                        <FormField name="tel">
+                            <FormLabel>電話番号</FormLabel>
+                            <FormControl asChild>
                                 <TextInput type="tel" required />
-                            </Form.Control>
-                            <Form.Message match="valueMissing">
+                            </FormControl>
+                            <FormMessage match="valueMissing">
                                 電話番号を入力してください
-                            </Form.Message>
-                            <Form.Message match="typeMismatch">電話番号の形式が誤っています</Form.Message>
-                        </Form.Field>
+                            </FormMessage>
+                            <FormMessage match="typeMismatch">電話番号の形式が誤っています</FormMessage>
+                        </FormField>
                     </div>
                 </div>
-                <Form.Submit asChild className="mt-20">
+                <FormSubmit asChild className="mt-20">
                     <Button>出品する</Button>
-                </Form.Submit>
-            </Form>
+                </FormSubmit>
+            </FormRoot>
         </div>
     )
 }

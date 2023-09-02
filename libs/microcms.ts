@@ -95,3 +95,26 @@ export const getTag = async (contentId: string, queries?: MicroCMSQueries) => {
 
   return detailData;
 };
+
+export type ItemInfo = {
+  title: string
+  description: string
+}
+
+export type UserInfo = {
+  name: string
+  email: string
+  tel: string
+}
+
+export const postItem = async (item: ItemInfo, user: UserInfo) => {
+  const detailData = await client
+    .create({
+      endpoint: 'items',
+      content: {
+        ...item,
+        ...user,
+      }
+    })
+  return detailData;
+};
