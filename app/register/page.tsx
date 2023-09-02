@@ -10,14 +10,22 @@ import { FormLabel } from "@/components/organisms/Form/FormLabel";
 import { FormMessage } from "@/components/organisms/Form/FormMessage";
 import { FormRoot } from "@/components/organisms/Form/FormRoot";
 import { FormSubmit } from "@/components/organisms/Form/FormSubmit";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { FormEventHandler } from "react";
 
 export default async function Register() {
-    const onSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
-        const data = Object.fromEntries(new FormData(e.currentTarget))
+    const router = useRouter()
+    const mutation = useMutation({
+        mutationFn: (data: any) => fetch("/api/items/create", { method: "POST", body: JSON.stringify(data) }),
+        onSuccess: async (data) => {
+            const parsed = await data.json()
+            router.push(`/articles/${parsed.id}`)
+          },
+    })
+    const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault()
-        const res = await fetch("/api/items/create", { method: "POST", body: JSON.stringify(data) })
-        await res.json()
+        mutation.mutate(Object.fromEntries(new FormData(e.currentTarget)))
     }
 
     return (
