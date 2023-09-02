@@ -4,6 +4,6 @@ export type FormRootProps = FormProps & React.RefAttributes<HTMLFormElement>
 
 export const FormRoot: React.FC<FormRootProps> = (props) => {
     return (
-        <Root className="flex flex-col gap-10" {...props} />
+        <Root className="flex flex-col" {...props} />
     )
 }
