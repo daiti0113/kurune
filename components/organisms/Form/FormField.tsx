@@ -4,6 +4,6 @@ type FormFieldProps = RadixFormFieldProps & React.RefAttributes<HTMLDivElement>
 
 export const FormField: React.FC<FormFieldProps> = (props) => {
     return (
-        <Field {...props} />
+        <Field className="flex flex-col gap-y-1" {...props} />
     )
 }
