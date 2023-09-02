@@ -53,12 +53,6 @@ export default function Article({ data }: Props) {
           height={data.thumbnail?.height}
         />
       </picture>
-      <div
-        className={styles.content}
-        dangerouslySetInnerHTML={{
-          __html: `${formatRichText(data.content)}`,
-        }}
-      />
     </main>
   );
 }
