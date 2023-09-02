@@ -11,34 +11,37 @@ export default function Register() {
         <div>
             <h1 className="text-xl font-bold">出品する</h1>
             <Form>
-                <div className="mt-4 flex flex-col gap-10">
-                    <Form.Field name="image">
-                        <Form.Label>商品画像</Form.Label>
-                        <Form.Control asChild>
-                            <ImageInput required />
-                        </Form.Control>
-                        <Form.Message match="valueMissing">
-                            画像を添付してください
-                        </Form.Message>
-                    </Form.Field>
-                    <Form.Field name="title">
-                        <Form.Label>タイトル</Form.Label>
-                        <Form.Control asChild>
-                            <TextInput required />
-                        </Form.Control>
-                        <Form.Message match="valueMissing">
-                            タイトルを入力してください
-                        </Form.Message>
-                    </Form.Field>
-                    <Form.Field name="description">
-                        <Form.Label>説明</Form.Label>
-                        <Form.Control asChild>
-                            <TextArea required />
-                        </Form.Control>
-                        <Form.Message match="valueMissing">
-                            説明を入力してください
-                        </Form.Message>
-                    </Form.Field>
+                <div className="mt-10">
+                    <h2 className="text-lg font-bold">商品情報</h2>
+                    <div className="mt-4 flex flex-col gap-10">
+                        <Form.Field name="image">
+                            <Form.Label>商品画像</Form.Label>
+                            <Form.Control asChild>
+                                <ImageInput required />
+                            </Form.Control>
+                            <Form.Message match="valueMissing">
+                                画像を添付してください
+                            </Form.Message>
+                        </Form.Field>
+                        <Form.Field name="title">
+                            <Form.Label>タイトル</Form.Label>
+                            <Form.Control asChild>
+                                <TextInput required />
+                            </Form.Control>
+                            <Form.Message match="valueMissing">
+                                タイトルを入力してください
+                            </Form.Message>
+                        </Form.Field>
+                        <Form.Field name="description">
+                            <Form.Label>説明</Form.Label>
+                            <Form.Control asChild>
+                                <TextArea required />
+                            </Form.Control>
+                            <Form.Message match="valueMissing">
+                                説明を入力してください
+                            </Form.Message>
+                        </Form.Field>
+                    </div>
                 </div>
                 <div className="mt-20">
                     <h2 className="text-lg font-bold">出品者情報</h2>
