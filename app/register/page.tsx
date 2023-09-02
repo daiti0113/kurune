@@ -46,6 +46,15 @@ export default function Register() {
                 <div className="mt-20">
                     <h2 className="text-lg font-bold">出品者情報</h2>
                     <div className="mt-4 flex flex-col gap-10">
+                        <Form.Field name="name">
+                            <Form.Label>名前</Form.Label>
+                            <Form.Control asChild>
+                                <TextInput required />
+                            </Form.Control>
+                            <Form.Message match="valueMissing">
+                                名前を入力してください
+                            </Form.Message>
+                        </Form.Field>
                         <Form.Field name="email">
                             <Form.Label>メールアドレス</Form.Label>
                             <Form.Control asChild>
@@ -56,9 +65,19 @@ export default function Register() {
                             </Form.Message>
                             <Form.Message match="typeMismatch">メールアドレスの形式が誤っています</Form.Message>
                         </Form.Field>
+                        <Form.Field name="tel">
+                            <Form.Label>電話番号</Form.Label>
+                            <Form.Control asChild>
+                                <TextInput type="tel" required />
+                            </Form.Control>
+                            <Form.Message match="valueMissing">
+                                電話番号を入力してください
+                            </Form.Message>
+                            <Form.Message match="typeMismatch">電話番号の形式が誤っています</Form.Message>
+                        </Form.Field>
                     </div>
                 </div>
-                <Form.Submit asChild>
+                <Form.Submit asChild className="mt-20">
                     <Button>出品する</Button>
                 </Form.Submit>
             </Form>
