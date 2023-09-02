@@ -1,9 +1,7 @@
 "use client"
 
 import { Button } from "@/components/atoms/Button";
-import { FormRoot } from "@/components/organisms/Form/FormRoot";
 import { TextInput } from "@/components/atoms/TextInput";
-import { FormControl, FormField, FormLabel, FormMessage, FormSubmit } from "@radix-ui/react-form";
 import Form from "@/components/organisms/Form";
 
 export default function Register() {
