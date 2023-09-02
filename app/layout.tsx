@@ -4,7 +4,6 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Nav from '@/components/Nav';
 import './globals.css';
-import styles from './layout.module.css';
 import { Button } from '@/components/atoms/Button';
 import Link from 'next/link';
 import { Suspense } from 'react';
@@ -36,12 +35,12 @@ export default async function RootLayout({ children }: Props) {
   return (
     <Providers>
       <html lang="ja">
-        <body>
+        <body className="h-screen flex flex-col">
           <Header />
           <Nav tags={tags.contents} />
           <Link href="/register"><Button>商品を出品する</Button></Link>
           <Suspense fallback={<Loading />}>
-            <main className={styles.main}>{children}</main>
+            <main className="flex-1 px-6">{children}</main>
           </Suspense>
           <Footer />
         </body>

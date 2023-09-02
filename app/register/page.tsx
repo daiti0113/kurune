@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/atoms/Button";
 import { ImageInput } from "@/components/atoms/ImageInput";
+import { Loading } from "@/components/atoms/Loading";
 import { TextArea } from "@/components/atoms/TextArea";
 import { TextInput } from "@/components/atoms/TextInput";
 import { FormControl } from "@/components/organisms/Form/FormControl";
@@ -17,18 +18,18 @@ import { FormEventHandler } from "react";
 export default async function Register() {
     const router = useRouter()
     const mutation = useMutation({
-        mutationFn: (data: any) => fetch("/api/items/create", { method: "POST", body: JSON.stringify(data) }),
-        onSuccess: async (data) => {
-            const parsed = await data.json()
+        mutationFn: async (data: any) => {
+            const res = await fetch("/api/items/create", { method: "POST", body: JSON.stringify(data) })
+            const parsed = await res.json()
             router.push(`/articles/${parsed.id}`)
-          },
+        },
     })
-    const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+    const onSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault()
-        mutation.mutate(Object.fromEntries(new FormData(e.currentTarget)))
+        await mutation.mutateAsync(Object.fromEntries(new FormData(e.currentTarget)))
     }
 
-    return (
+    return mutation.isLoading ? <Loading /> : (
         <div>
             <h1 className="text-xl font-bold">出品する</h1>
             <FormRoot onSubmit={onSubmit}>
