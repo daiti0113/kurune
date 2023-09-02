@@ -5,6 +5,8 @@ import Footer from '@/components/Footer';
 import Nav from '@/components/Nav';
 import './globals.css';
 import styles from './layout.module.css';
+import { Button } from '@/components/atoms/Button';
+import Link from 'next/link';
 
 export const metadata = {
   metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
@@ -33,6 +35,7 @@ export default async function RootLayout({ children }: Props) {
       <body>
         <Header />
         <Nav tags={tags.contents} />
+        <Link href="/register"><Button>商品を出品する</Button></Link>
         <main className={styles.main}>{children}</main>
         <Footer />
       </body>
