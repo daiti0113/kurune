@@ -2,8 +2,8 @@ import { FormMessageProps as RadixFormMessageProps, Message } from "@radix-ui/re
 
 type FormMessageProps = RadixFormMessageProps & React.RefAttributes<HTMLSpanElement>
 
-export const FormMessage: React.FC<FormMessageProps> = (props) => {
+export const FormMessage: React.FC<FormMessageProps> = ({...props}) => {
     return (
-        <Message {...props} />
+        <Message className="mt-1 text-sm text-warn-500" {...props} />
     )
 }
