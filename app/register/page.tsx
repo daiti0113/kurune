@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/atoms/Button";
 import { FormRoot } from "@/components/atoms/Organisms/Form/FormRoot";
+import { TextInput } from "@/components/atoms/TextInput";
 import { FormControl, FormField, FormLabel, FormMessage, FormSubmit } from "@radix-ui/react-form";
 
 export default function Register() {
@@ -18,7 +19,7 @@ export default function Register() {
                     </FormMessage>
                     <FormMessage match="typeMismatch">メールアドレスの形式が誤っています</FormMessage>
                     <FormControl asChild>
-                        <input type="email" required />
+                        <TextInput type="email" required />
                     </FormControl>
                 </FormField>
                 <FormSubmit asChild>
