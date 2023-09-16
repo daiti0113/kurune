@@ -16,22 +16,33 @@ export const useUpload = () => {
         )
     
         try {
+          const Key = generateFileName(file)
           const parallelUploads3 = new Upload({
             client: new S3Client({ region: "ap-northeast-1", credentials: creds }),
-            params: { Bucket: process.env.NEXT_PUBLIC_AWS_S3_BUCKET_NAME, Key: file.name, Body: file },
+            params: { Bucket: process.env.NEXT_PUBLIC_AWS_S3_BUCKET_NAME, Key, Body: file },
             leavePartsOnError: false,
           })
-    
           parallelUploads3.on("httpUploadProgress", (progress) => {
             console.log(progress)
           })
     
           await parallelUploads3.done()
           setIsLoading(false)
+          return createImageUrl(Key)
         } catch (e) {
           console.log(e)
         }
       }, [])
 
       return { upload, isLoading }
+}
+
+const generateFileName = (file: File) => {
+  const name = crypto.randomUUID()
+  const extension = file.type.replace(/(.*)\//g, '')
+  return `${name}.${extension}`
+}
+
+const createImageUrl = (Key: string) => {
+  return `https://${process.env.NEXT_PUBLIC_AWS_S3_BUCKET_NAME}.s3.ap-northeast-1.amazonaws.com/${Key}`
 }

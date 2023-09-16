@@ -1,11 +1,12 @@
 "use client"
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useUpload } from "@/hooks/s3";
 
 function UploadImage() {
   const inputRef = useRef<HTMLInputElement>(null);
+  const [url, setUrl] = useState("");
   const { upload, isLoading } = useUpload()
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: upload,
@@ -16,15 +17,18 @@ function UploadImage() {
     inputRef.current.click();
   };
 
-  const onFileInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onFileInputChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files == null) return;
     console.log(event.target.files[0]);
-    upload([event.target.files[0]])
+    const fileUrl = await upload([event.target.files[0]])
+    console.log({fileUrl})
+    fileUrl && setUrl(fileUrl)
   };
 
   return (
     <div className="App">
       <div className="flex justify-center items-center h-screen">
+        <img src={url} height={200} width={200} />
         {isLoading ? (
           <h1>アップロード中・・・</h1>
         ) : (
