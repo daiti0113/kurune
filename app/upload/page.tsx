@@ -6,9 +6,9 @@ import { useUpload } from "@/hooks/s3";
 
 function UploadImage() {
   const inputRef = useRef<HTMLInputElement>(null);
-  const { upload: onDrop, isLoading } = useUpload()
+  const { upload, isLoading } = useUpload()
   const { getRootProps, getInputProps } = useDropzone({
-    onDrop,
+    onDrop: upload,
   });
 
   const fileUpload = () => {
@@ -19,6 +19,7 @@ function UploadImage() {
   const onFileInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files == null) return;
     console.log(event.target.files[0]);
+    upload([event.target.files[0]])
   };
 
   return (
