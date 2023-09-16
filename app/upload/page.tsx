@@ -1,43 +1,12 @@
 "use client"
 
-import { useCallback, useRef, useState } from "react";
+import { useRef } from "react";
 import { useDropzone } from "react-dropzone";
-import { Credentials } from "aws-sdk";
-import { Upload } from "@aws-sdk/lib-storage";
-import { S3Client } from "@aws-sdk/client-s3";
+import { useUpload } from "@/hooks/s3";
 
 function UploadImage() {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [isLoading, setIsLoading] = useState(false);
-
-  
-  const onDrop = useCallback(async (acceptedFiles: File[]) => {
-    if (!process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID || !process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY) return null
-    setIsLoading(true);
-    const file = acceptedFiles[0];
-    const creds = new Credentials(
-      process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID,
-      process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY
-    );
-
-    try {
-      const parallelUploads3 = new Upload({
-        client: new S3Client({ region: "ap-northeast-1", credentials: creds }),
-        params: { Bucket: process.env.NEXT_PUBLIC_AWS_S3_BUCKET_NAME, Key: file.name, Body: file },
-        leavePartsOnError: false,
-      });
-
-      parallelUploads3.on("httpUploadProgress", (progress) => {
-        console.log(progress);
-      });
-
-      await parallelUploads3.done();
-      await setIsLoading(false);
-    } catch (e) {
-      console.log(e);
-    }
-  }, []);
-
+  const { upload: onDrop, isLoading } = useUpload()
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
   });
