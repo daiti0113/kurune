@@ -13,19 +13,19 @@ export default function ArticleListItem({ article }: Props) {
   return (
     <li className={styles.list}>
       <Link href={`/articles/${article.id}`} className={styles.link}>
-        {article.thumbnail ? (
+        {article.image ? (
           <picture>
             <source
               type="image/webp"
               media="(max-width: 640px)"
-              srcSet={`${article.thumbnail?.url}?fm=webp&w=414 1x, ${article.thumbnail?.url}?fm=webp&w=414&dpr=2 2x`}
+              srcSet={`${article.image}?fm=webp&w=414 1x, ${article.image}?fm=webp&w=414&dpr=2 2x`}
             />
             <source
               type="image/webp"
-              srcSet={`${article.thumbnail?.url}?fm=webp&fit=crop&w=240&h=126 1x, ${article.thumbnail?.url}?fm=webp&fit=crop&w=240&h=126&dpr=2 2x`}
+              srcSet={`${article.image}?fm=webp&fit=crop&w=240&h=126 1x, ${article.image}?fm=webp&fit=crop&w=240&h=126&dpr=2 2x`}
             />
             <img
-              src={article.thumbnail?.url || `/noimage.png`}
+              src={article.image || `/noimage.png`}
               alt=""
               className={styles.image}
               width={article.thumbnail?.width}

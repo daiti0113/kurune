@@ -38,14 +38,14 @@ export default function Article({ data }: Props) {
         <source
           type="image/webp"
           media="(max-width: 640px)"
-          srcSet={`${data.thumbnail?.url}?fm=webp&w=414 1x, ${data.thumbnail?.url}?fm=webp&w=414&dpr=2 2x`}
+          srcSet={`${data.image}?fm=webp&w=414 1x, ${data.image}?fm=webp&w=414&dpr=2 2x`}
         />
         <source
           type="image/webp"
-          srcSet={`${data.thumbnail?.url}?fm=webp&fit=crop&w=960&h=504 1x, ${data.thumbnail?.url}?fm=webp&fit=crop&w=960&h=504&dpr=2 2x`}
+          srcSet={`${data.image}?fm=webp&fit=crop&w=960&h=504 1x, ${data.image}?fm=webp&fit=crop&w=960&h=504&dpr=2 2x`}
         />
         <img
-          src={data.thumbnail?.url}
+          src={data.image}
           alt=""
           className={styles.thumbnail}
           width={data.thumbnail?.width}
