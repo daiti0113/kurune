@@ -5,18 +5,22 @@ import { ImageInput } from "@/components/atoms/ImageInput";
 import { Loading } from "@/components/atoms/Loading";
 import { TextArea } from "@/components/atoms/TextArea";
 import { TextInput } from "@/components/atoms/TextInput";
+import { FileInput } from "@/components/molecules/FileInput";
 import { FormControl } from "@/components/organisms/Form/FormControl";
 import { FormField } from "@/components/organisms/Form/FormField";
 import { FormLabel } from "@/components/organisms/Form/FormLabel";
 import { FormMessage } from "@/components/organisms/Form/FormMessage";
 import { FormRoot } from "@/components/organisms/Form/FormRoot";
 import { FormSubmit } from "@/components/organisms/Form/FormSubmit";
+import { useUpload } from "@/hooks/s3";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { FormEventHandler } from "react";
+import { FormEventHandler, useState } from "react";
 
 export default async function Register() {
     const router = useRouter()
+    const [url, setUrl] = useState("");
+    const { upload, isLoading } = useUpload()
     const mutation = useMutation({
         mutationFn: async (data: any) => {
             const res = await fetch("/api/items/create", { method: "POST", body: JSON.stringify(data) })
@@ -39,7 +43,7 @@ export default async function Register() {
                         <FormField name="image">
                             <FormLabel>商品画像</FormLabel>
                             <FormControl asChild>
-                                <ImageInput required />
+                                <FileInput onDrop={upload} />
                             </FormControl>
                             <FormMessage match="valueMissing">
                                 画像を添付してください
