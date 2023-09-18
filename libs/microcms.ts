@@ -21,8 +21,9 @@ export type Writer = {
 } & MicroCMSContentId &
   MicroCMSDate;
 
+// TODO: 後で型を整理する
 // ブログの型定義
-export type Blog = {
+export type Blog = ItemInfo & UserInfo & {
   title: string;
   description: string;
   content: string;

@@ -9,25 +9,33 @@ import { FormLabel } from "@/components/organisms/Form/FormLabel";
 import { FormMessage } from "@/components/organisms/Form/FormMessage";
 import { FormRoot } from "@/components/organisms/Form/FormRoot";
 import { FormSubmit } from "@/components/organisms/Form/FormSubmit";
+import { Article } from "@/libs/microcms";
 import { useMutation } from "@tanstack/react-query";
 import { FormEventHandler } from "react";
 
 type CommentFormProps = {
-    itemId: string
+    item: Article
 }
 
-export const CommentForm: React.FC<CommentFormProps> = ({itemId}) => {
-    const mutation = useMutation({
+export const CommentForm: React.FC<CommentFormProps> = ({item}) => {
+    const createCommentMutation = useMutation({
         mutationFn: async (data: any) => {
             const res = await fetch("/api/comments/create", { method: "POST", body: JSON.stringify(data) })
+            const parsed = await res.json()
+        },
+    })
+    const sendEmailMutation = useMutation({
+        mutationFn: async (data: any) => {
+            const res = await fetch("/api/notify/email", { method: "POST", body: JSON.stringify({toAdress: item.email, fromName: data.name, itemName: item.title, comment: data.comment}) })
             const parsed = await res.json()
         },
     })
     const onSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault()
         const formData = new FormData(e.currentTarget)
-        formData.append("item", itemId)
-        await mutation.mutateAsync(Object.fromEntries(formData))
+        formData.append("item", item.id)
+        await sendEmailMutation.mutateAsync(Object.fromEntries(formData))
+        // await createCommentMutation.mutateAsync(Object.fromEntries(formData))
     }
 
     return (

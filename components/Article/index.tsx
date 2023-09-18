@@ -53,7 +53,7 @@ export default function Article({ data }: Props) {
           height={data.thumbnail?.height}
         />
       </picture>
-      <CommentForm itemId={data.id} />
+      <CommentForm item={data} />
     </main>
   );
 }
