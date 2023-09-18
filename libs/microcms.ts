@@ -102,6 +102,10 @@ export type ItemInfo = {
   description: string
 }
 
+export type CommentInfo = {
+  comment: string
+}
+
 export type UserInfo = {
   name: string
   email: string
@@ -112,6 +116,15 @@ export const postItem = async (data: ItemInfo & UserInfo) => {
   const detailData = await client
     .create({
       endpoint: 'items',
+      content: data
+    })
+  return detailData;
+};
+
+export const postComment = async (data: CommentInfo & UserInfo) => {
+  const detailData = await client
+    .create({
+      endpoint: 'comments',
       content: data
     })
   return detailData;

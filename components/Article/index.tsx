@@ -2,6 +2,7 @@ import { type Article } from '@/libs/microcms';
 import PublishedDate from '../Date';
 import styles from './index.module.css';
 import TagList from '../TagList';
+import { CommentForm } from '../organisms/CommentForm';
 
 type Props = {
   data: Article;
@@ -52,6 +53,7 @@ export default function Article({ data }: Props) {
           height={data.thumbnail?.height}
         />
       </picture>
+      <CommentForm itemId={data.id} />
     </main>
   );
 }
