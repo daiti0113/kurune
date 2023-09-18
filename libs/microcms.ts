@@ -107,14 +107,11 @@ export type UserInfo = {
   tel: string
 }
 
-export const postItem = async (item: ItemInfo, user: UserInfo) => {
+export const postItem = async (data: ItemInfo & UserInfo) => {
   const detailData = await client
     .create({
       endpoint: 'items',
-      content: {
-        ...item,
-        ...user,
-      }
+      content: data
     })
   return detailData;
 };

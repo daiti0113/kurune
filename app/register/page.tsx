@@ -5,7 +5,6 @@ import { ImageInput } from "@/components/atoms/ImageInput";
 import { Loading } from "@/components/atoms/Loading";
 import { TextArea } from "@/components/atoms/TextArea";
 import { TextInput } from "@/components/atoms/TextInput";
-import { FileInput } from "@/components/molecules/FileInput";
 import { FormControl } from "@/components/organisms/Form/FormControl";
 import { FormField } from "@/components/organisms/Form/FormField";
 import { FormLabel } from "@/components/organisms/Form/FormLabel";
@@ -19,21 +18,27 @@ import { FormEventHandler, useState } from "react";
 
 export default async function Register() {
     const router = useRouter()
-    const [url, setUrl] = useState("");
-    const { upload, isLoading } = useUpload()
+    const [isLoading, setIsLoading] = useState(false)
+    const { upload } = useUpload()
     const mutation = useMutation({
         mutationFn: async (data: any) => {
             const res = await fetch("/api/items/create", { method: "POST", body: JSON.stringify(data) })
             const parsed = await res.json()
             router.push(`/articles/${parsed.id}`)
+            setIsLoading(false)
         },
     })
     const onSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
+        setIsLoading(true)
         e.preventDefault()
-        await mutation.mutateAsync(Object.fromEntries(new FormData(e.currentTarget)))
+        const formData = new FormData(e.currentTarget)
+        const file = formData.get("image") as File
+        const fileUrl = await upload([file])
+        fileUrl && formData.set("image", fileUrl)
+        await mutation.mutateAsync(Object.fromEntries(formData))
     }
 
-    return mutation.isLoading ? <Loading /> : (
+    return isLoading ? <Loading /> : (
         <div>
             <h1 className="text-xl font-bold">出品する</h1>
             <FormRoot onSubmit={onSubmit}>
@@ -43,7 +48,7 @@ export default async function Register() {
                         <FormField name="image">
                             <FormLabel>商品画像</FormLabel>
                             <FormControl asChild>
-                                <FileInput onDrop={upload} />
+                                <ImageInput />
                             </FormControl>
                             <FormMessage match="valueMissing">
                                 画像を添付してください
