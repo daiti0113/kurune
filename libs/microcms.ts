@@ -22,8 +22,8 @@ export type Writer = {
   MicroCMSDate;
 
 // TODO: 後で型を整理する
-// ブログの型定義
-export type Blog = ItemInfo & UserInfo & {
+// 商品の型定義
+export type Item = ItemInfo & UserInfo & {
   title: string;
   description: string;
   content: string;
@@ -33,7 +33,7 @@ export type Blog = ItemInfo & UserInfo & {
   image?: string;
 };
 
-export type Article = Blog & MicroCMSContentId & MicroCMSDate;
+export type Article = Item & MicroCMSContentId & MicroCMSDate;
 
 if (!process.env.MICROCMS_SERVICE_DOMAIN) {
   throw new Error('MICROCMS_SERVICE_DOMAIN is required');
@@ -49,10 +49,10 @@ export const client = createClient({
   apiKey: process.env.MICROCMS_API_KEY,
 });
 
-// ブログ一覧を取得
+// 商品一覧を取得
 export const getList = async (queries?: MicroCMSQueries) => {
   const listData = await client
-    .getList<Blog>({
+    .getList<Item>({
       endpoint: 'items',
       queries,
     })
@@ -60,10 +60,10 @@ export const getList = async (queries?: MicroCMSQueries) => {
   return listData;
 };
 
-// ブログの詳細を取得
+// 商品の詳細を取得
 export const getDetail = async (contentId: string, queries?: MicroCMSQueries) => {
   const detailData = await client
-    .getListDetail<Blog>({
+    .getListDetail<Item>({
       endpoint: 'items',
       contentId,
       queries,
