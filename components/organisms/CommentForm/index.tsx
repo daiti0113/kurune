@@ -89,7 +89,7 @@ export const CommentForm: React.FC<CommentFormProps> = ({article}) => {
                     </div>
                 </div>
                 <FormSubmit asChild className="mt-20">
-                    <Button disabled={isLoading}>問い合わせる</Button>
+                    <Button isLoading={isLoading}>問い合わせる</Button>
                 </FormSubmit>
             </FormRoot>
         </div>
