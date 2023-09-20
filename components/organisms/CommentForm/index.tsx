@@ -11,13 +11,14 @@ import { FormRoot } from "@/components/organisms/Form/FormRoot";
 import { FormSubmit } from "@/components/organisms/Form/FormSubmit";
 import { Article } from "@/libs/microcms";
 import { useMutation } from "@tanstack/react-query";
-import { FormEventHandler } from "react";
+import { FormEventHandler, useState } from "react";
 
 type CommentFormProps = {
-    item: Article
+    article: Article
 }
 
-export const CommentForm: React.FC<CommentFormProps> = ({item}) => {
+export const CommentForm: React.FC<CommentFormProps> = ({article}) => {
+    const [isLoading, setIsLoading] = useState(false)
     const createCommentMutation = useMutation({
         mutationFn: async (data: any) => {
             const res = await fetch("/api/comments/create", { method: "POST", body: JSON.stringify(data) })
@@ -25,17 +26,20 @@ export const CommentForm: React.FC<CommentFormProps> = ({item}) => {
         },
     })
     const sendEmailMutation = useMutation({
-        mutationFn: async (data: any) => {
-            const res = await fetch("/api/notify/email", { method: "POST", body: JSON.stringify({toAdress: item.email, fromName: data.name, itemName: item.title, comment: data.comment}) })
+        // TODO: anyをやめて型安全にする
+        mutationFn: async (comment: any) => {
+            const res = await fetch("/api/notify/email", { method: "POST", body: JSON.stringify({article, comment}) })
             const parsed = await res.json()
         },
     })
     const onSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
+        setIsLoading(true)
         e.preventDefault()
         const formData = new FormData(e.currentTarget)
-        formData.append("item", item.id)
+        formData.append("item", article.id)
+        await createCommentMutation.mutateAsync(Object.fromEntries(formData))
         await sendEmailMutation.mutateAsync(Object.fromEntries(formData))
-        // await createCommentMutation.mutateAsync(Object.fromEntries(formData))
+        setIsLoading(false)
     }
 
     return (
@@ -85,7 +89,7 @@ export const CommentForm: React.FC<CommentFormProps> = ({item}) => {
                     </div>
                 </div>
                 <FormSubmit asChild className="mt-20">
-                    <Button>問い合わせる</Button>
+                    <Button disabled={isLoading}>問い合わせる</Button>
                 </FormSubmit>
             </FormRoot>
         </div>
