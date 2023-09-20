@@ -13,23 +13,28 @@ export type Tag = {
 } & MicroCMSContentId &
   MicroCMSDate;
 
+// TODO: 使っていないので後で削除する
 // ライターの型定義
-export type Writer = {
-  name: string;
+export type Seller = {
+  name: string
+  email: string
+  tel: string
   profile: string;
   image?: MicroCMSImage;
 } & MicroCMSContentId &
   MicroCMSDate;
 
-// TODO: 後で型を整理する
 // 商品の型定義
-export type Item = ItemInfo & UserInfo & {
+export type Item = {
+  name: string
+  email: string
+  tel: string
   title: string;
   description: string;
   content: string;
   thumbnail?: MicroCMSImage;
   tags?: Tag[];
-  writer?: Writer;
+  seller?: Seller;
   image?: string;
 };
 
@@ -98,22 +103,14 @@ export const getTag = async (contentId: string, queries?: MicroCMSQueries) => {
   return detailData;
 };
 
-export type ItemInfo = {
-  title: string
-  description: string
-}
-
-export type CommentInfo = {
-  comment: string
-}
-
-export type UserInfo = {
+export type Comment = {
   name: string
   email: string
   tel: string
+  comment: string
 }
 
-export const postItem = async (data: ItemInfo & UserInfo) => {
+export const postItem = async (data: Item) => {
   const detailData = await client
     .create({
       endpoint: 'items',
@@ -122,7 +119,7 @@ export const postItem = async (data: ItemInfo & UserInfo) => {
   return detailData;
 };
 
-export const postComment = async (data: CommentInfo & UserInfo) => {
+export const postComment = async (data: Comment) => {
   const detailData = await client
     .create({
       endpoint: 'comments',
