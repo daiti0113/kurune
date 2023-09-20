@@ -13,10 +13,10 @@ export default function ArticleList({ articles }: Props) {
     return <p>記事がありません。</p>;
   }
   return (
-    <ul>
+    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-6 xl:gap-8">
       {articles.map((article) => (
         <ArticleListItem key={article.id} article={article} />
       ))}
-    </ul>
+    </div>
   );
 }

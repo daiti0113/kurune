@@ -1,9 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Article } from '@/libs/microcms';
-import styles from './index.module.css';
 import TagList from '../TagList';
-import PublishedDate from '../Date';
 
 type Props = {
   article: Article;
@@ -11,8 +9,8 @@ type Props = {
 
 export default function ArticleListItem({ article }: Props) {
   return (
-    <li className={styles.list}>
-      <Link href={`/articles/${article.id}`} className={styles.link}>
+    <div>
+      <Link href={`/articles/${article.id}`} className="group relative flex h-48 mb-2 items-end justify-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-96">
         {article.image ? (
           <picture>
             <source
@@ -27,30 +25,29 @@ export default function ArticleListItem({ article }: Props) {
             <img
               src={article.image || `/noimage.png`}
               alt=""
-              className={styles.image}
+              className="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
               width={article.thumbnail?.width}
               height={article.thumbnail?.height}
             />
           </picture>
         ) : (
           <Image
-            className={styles.image}
+            className="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
             src="/no-image.png"
             alt="No Image"
             width={1200}
             height={630}
           />
         )}
-        <dl className={styles.content}>
-          <dt className={styles.title}>{article.title}</dt>
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50"></div>
+        <span className="relative mr-3 mb-3 inline-block rounded-lg border border-gray-500 px-2 py-1 text-xs text-gray-200 font-semibold backdrop-blur-lg md:px-3 md:text-sm">10,000円</span>
+      </Link>
+      <dl>
+          <dt className="text-md font-bold md:text-lg lg:text-xl">{article.title}</dt>
           <dd>
             <TagList tags={article.tags} hasLink={false} />
           </dd>
-          <dd className={styles.date}>
-            <PublishedDate date={article.publishedAt || article.createdAt} />
-          </dd>
         </dl>
-      </Link>
-    </li>
+    </div>
   );
 }
