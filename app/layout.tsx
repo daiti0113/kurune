@@ -12,12 +12,12 @@ import { Providers } from './Providers';
 
 export const metadata = {
   metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
-  title: 'Simple Blog',
-  description: 'A simple blog presented by microCMS',
+  title: 'kurune | 沖縄のフリマサイト',
+  description: '沖縄県限定の手渡し専用フリマサイトです。',
   openGraph: {
-    title: 'Simple Blog',
-    description: 'A simple blog presented by microCMS',
-    images: '/ogp.png',
+    title: 'kurune | 沖縄のフリマサイト',
+    description: '沖縄県限定の手渡し専用フリマサイトです。',
+    images: '/logo.png',
   },
   alternates: {
     canonical: '/',
