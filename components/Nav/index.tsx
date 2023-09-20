@@ -8,7 +8,7 @@ type Props = {
 
 export default function Nav({ tags }: Props) {
   return (
-    <nav className={styles.nav}>
+    <nav className="flex flex-col items-center justify-center gap-2 px-6 pb-6 mb-8 border-b-[1px]">
       <TagList tags={tags} />
     </nav>
   );

@@ -38,9 +38,8 @@ export default async function RootLayout({ children }: Props) {
         <body className="h-screen flex flex-col">
           <Header />
           <Nav tags={tags.contents} />
-          <Link href="/register"><Button>商品を出品する</Button></Link>
           <Suspense fallback={<Loading />}>
-            <main className="flex-1 px-6">{children}</main>
+            <main className="flex flex-col flex-1 px-6">{children}</main>
           </Suspense>
           <Footer />
         </body>
