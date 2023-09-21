@@ -39,7 +39,6 @@ export const CommentForm: React.FC<CommentFormProps> = ({article}) => {
         formData.append("item", article.id)
         await createCommentMutation.mutateAsync(Object.fromEntries(formData))
         await sendEmailMutation.mutateAsync(Object.fromEntries(formData))
-        setIsLoading(false)
     }
 
     return (
