@@ -22,6 +22,7 @@ export default async function Register() {
     const { upload } = useUpload()
     const mutation = useMutation({
         mutationFn: async (data: any) => {
+            data = {...data, price: Number(data.price)}
             const res = await fetch("/api/items/create", { method: "POST", body: JSON.stringify(data) })
             const parsed = await res.json()
             router.push(`/articles/${parsed.id}`)
@@ -58,6 +59,15 @@ export default async function Register() {
                             <FormLabel>タイトル</FormLabel>
                             <FormControl asChild>
                                 <TextInput required />
+                            </FormControl>
+                            <FormMessage match="valueMissing">
+                                タイトルを入力してください
+                            </FormMessage>
+                        </FormField>
+                        <FormField name="price">
+                            <FormLabel>価格</FormLabel>
+                            <FormControl asChild>
+                                <TextInput required type="number" />
                             </FormControl>
                             <FormMessage match="valueMissing">
                                 タイトルを入力してください
