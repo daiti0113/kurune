@@ -27,6 +27,7 @@ export type Seller = {
 // 商品の型定義
 export type Item = {
   name: string
+  price: number
   email: string
   tel: string
   title: string;
