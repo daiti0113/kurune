@@ -88,7 +88,7 @@ export const RegisterForm = ({ tags }: RegisterProps) => {
                         <TextInput label="価格" errorMessage={errors.price?.message} type="number" {...register("price", options.price)} />
                         <InputContainer label="カテゴリ（複数選択可）" errorMessage={errors.tags?.message}>
                             <Select multiple {...register("tags", options.tags)} >
-                                {tags.map((tag) => <option key={tag.id} label={tag.name} value={tag.id} />)}
+                                {tags.map((tag) => <option key={tag.id} value={tag.id}>{tag.name}</option>)}
                             </Select>
                         </InputContainer>
                         <InputContainer label="説明" errorMessage={errors.description?.message}>
