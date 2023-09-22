@@ -39,7 +39,6 @@ export type Item = {
   image?: string;
 };
 
-// TODO: コメント入力フォームと合わせて、型の整理をする
 export type Comment = {
   name: string
   email: string
@@ -125,7 +124,9 @@ export const postItem = async (data: PostItemPayload) => {
   return detailData;
 };
 
-export const postComment = async (data: Comment) => {
+export type PostCommentPayload = Comment
+
+export const postComment = async (data: PostCommentPayload) => {
   const detailData = await client
     .create({
       endpoint: 'comments',

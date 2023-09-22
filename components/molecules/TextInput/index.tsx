@@ -7,7 +7,7 @@ type TextInputProps = TextInputCoreProps & InputContainerProps
 export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(function TextInputInner({errorMessage, label, ...props}, ref) {
     return (
         <InputContainer label={label} errorMessage={errorMessage}>
-            <TextInputCore {...props} />
+            <TextInputCore {...props} ref={ref} />
         </InputContainer>
     )
 })
