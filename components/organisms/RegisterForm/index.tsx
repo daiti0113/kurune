@@ -53,37 +53,37 @@ export const RegisterForm = ({ tags }: RegisterProps) => {
                 <div className="mt-10">
                     <h2 className="text-lg font-bold">商品情報</h2>
                     <div className="mt-4 flex flex-col gap-10">
-                            <Label>商品画像</Label>
-                                <ImageInput {...register("image")} />
-                                {errors.image && <span>画像を添付してください</span>}
-                            <Label>タイトル</Label>
-                                <TextInput required {...register("title")} />
-                                {errors.image && <span>タイトルを入力してください</span>}
-                            <Label>価格</Label>
-                                <TextInput required type="number" {...register("price", {valueAsNumber: true})} />
-                                {errors.image && <span>タイトルを入力してください</span>}
-                            <Label>カテゴリ（複数選択可）</Label>
-                                <Select required multiple {...register("tags")} >
-                                    {tags.map((tag) => <option key={tag.id} label={tag.name} value={tag.id} />)}
-                                </Select>
-                                {errors.image && <span>タイトルを入力してください</span>}
-                            <Label>説明</Label>
-                                <TextArea required {...register("description")} />
-                                {errors.image && <span>説明を入力してください</span>}
+                        <Label>商品画像</Label>
+                        <ImageInput {...register("image")} />
+                        {errors.image && <span>画像を添付してください</span>}
+                        <Label>タイトル</Label>
+                        <TextInput required {...register("title")} />
+                        {errors.image && <span>タイトルを入力してください</span>}
+                        <Label>価格</Label>
+                        <TextInput required type="number" {...register("price", {valueAsNumber: true})} />
+                        {errors.image && <span>タイトルを入力してください</span>}
+                        <Label>カテゴリ（複数選択可）</Label>
+                        <Select required multiple {...register("tags")} >
+                            {tags.map((tag) => <option key={tag.id} label={tag.name} value={tag.id} />)}
+                        </Select>
+                        {errors.image && <span>タイトルを入力してください</span>}
+                        <Label>説明</Label>
+                        <TextArea required {...register("description")} />
+                        {errors.image && <span>説明を入力してください</span>}
                     </div>
                 </div>
                 <div className="mt-20">
                     <h2 className="text-lg font-bold">出品者情報</h2>
                     <div className="mt-4 flex flex-col gap-10">
-                            <Label>名前</Label>
-                                <TextInput required {...register("name")} />
-                                {errors.image && <span>名前を入力してください</span>}
-                            <Label>メールアドレス</Label>
-                                <TextInput type="email" required {...register("email")} />
-                                {errors.image && <span>メールアドレスを入力してください</span>}
-                            <Label>電話番号</Label>
-                                <TextInput type="tel" required {...register("tel")} />
-                                {errors.image && <span>電話番号を入力してください</span>}
+                        <Label>名前</Label>
+                        <TextInput required {...register("name")} />
+                        {errors.image && <span>名前を入力してください</span>}
+                        <Label>メールアドレス</Label>
+                        <TextInput type="email" required {...register("email")} />
+                        {errors.image && <span>メールアドレスを入力してください</span>}
+                        <Label>電話番号</Label>
+                        <TextInput type="tel" required {...register("tel")} />
+                        {errors.image && <span>電話番号を入力してください</span>}
                     </div>
                 </div>
                 <Button type="submit">出品する</Button>
