@@ -9,7 +9,7 @@ export type InputContainerProps = {
 
 export const InputContainer: React.FC<InputContainerProps> = ({ label, errorMessage, children }) => {
     return (
-        <div>
+        <div className="max-w-[500px]">
             <Label>{label}</Label>
             {children}
             {errorMessage && <Message>{errorMessage}</Message>}

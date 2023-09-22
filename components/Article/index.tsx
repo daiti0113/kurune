@@ -11,7 +11,7 @@ type Props = {
 export default function Article({ data }: Props) {
   return (
     <main className={styles.main}>
-      <div className="flex gap-10 w-full">
+      <div className="flex flex-col gap-10 w-full max-w-6xl md:flex-row">
         <picture className="flex-[1.5_1_0%] max-w-xl">
           <source
             type="image/webp"
@@ -29,9 +29,12 @@ export default function Article({ data }: Props) {
           />
         </picture>
         <div className="flex-1 w-full">
-          <h1 className={styles.title}>{data.title}</h1>
+          <h1 className="text-2xl font-bold">{data.title}</h1>
           <TagList tags={data.tags} />
-          <p className={styles.description}>{data.description}</p>
+          <span className="text-neutral-600">¥<span className="text-2xl font-semibold text-primary-500">{data.price.toLocaleString()}</span></span>
+          <div>
+            <p className="my-10 whitespace-pre-wrap">{data.description}</p>
+          </div>
           <PublishedDate date={data.publishedAt || data.createdAt} />
           <CommentForm article={data} />
         </div>

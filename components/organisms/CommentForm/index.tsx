@@ -58,10 +58,10 @@ export const CommentForm: React.FC<CommentFormProps> = ({article}) => {
     })
 
     return (
-        <div>
-            <h1 className="text-xl font-bold">この商品について問い合わせる</h1>
+        <div className="mt-16">
+            <h1 className="text-2xl font-bold text-neutral-400">この商品について問い合わせる</h1>
             <form onSubmit={onSubmit}>
-                <div className="mt-20">
+                <div>
                     <div className="mt-4 flex flex-col gap-10">
                         <TextInput label="名前" errorMessage={errors.name?.message} {...register("name", options.name)} />
                         <TextInput label="メールアドレス" errorMessage={errors.email?.message} {...register("email", options.email)} type="email" />
