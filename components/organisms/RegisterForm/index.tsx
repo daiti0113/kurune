@@ -7,6 +7,8 @@ import { Loading } from "@/components/atoms/Loading";
 import { Select } from "@/components/atoms/Select";
 import { TextArea } from "@/components/atoms/TextArea";
 import { TextInputCore } from "@/components/atoms/TextInputCore";
+import { InputContainer } from "@/components/molecules/InputContainer";
+import { TextInput } from "@/components/molecules/TextInput";
 import { useUpload } from "@/hooks/s3";
 import { PostItemPayload, Tag } from "@/libs/microcms";
 import { useMutation } from "@tanstack/react-query";
@@ -24,7 +26,6 @@ type RegisterProps = {
 
 
 // TODO: バリデーションルールを追加
-// TODO: コンポーネント化
 
 export const RegisterForm = ({ tags }: RegisterProps) => {
     const router = useRouter()
@@ -53,37 +54,25 @@ export const RegisterForm = ({ tags }: RegisterProps) => {
                 <div className="mt-10">
                     <h2 className="text-lg font-bold">商品情報</h2>
                     <div className="mt-4 flex flex-col gap-10">
-                        <Label>商品画像</Label>
-                        <ImageInput {...register("image")} />
-                        {errors.image && <span>画像を添付してください</span>}
-                        <Label>タイトル</Label>
-                        <TextInputCore required {...register("title")} />
-                        {errors.image && <span>タイトルを入力してください</span>}
-                        <Label>価格</Label>
-                        <TextInputCore required type="number" {...register("price", {valueAsNumber: true})} />
-                        {errors.image && <span>タイトルを入力してください</span>}
-                        <Label>カテゴリ（複数選択可）</Label>
-                        <Select required multiple {...register("tags")} >
-                            {tags.map((tag) => <option key={tag.id} label={tag.name} value={tag.id} />)}
-                        </Select>
-                        {errors.image && <span>タイトルを入力してください</span>}
-                        <Label>説明</Label>
-                        <TextArea required {...register("description")} />
-                        {errors.image && <span>説明を入力してください</span>}
+                        <TextInput label="商品画像" errorMessage="画像を添付してください" {...register("image")} />
+                        <TextInput label="タイトル" errorMessage="タイトルを入力してください" {...register("title")} />
+                        <TextInput label="価格" errorMessage="価格を入力してください" type="number" {...register("price", {valueAsNumber: true})} />
+                        <InputContainer label="カテゴリ（複数選択可）" errorMessage="カテゴリを選択してください">
+                            <Select required multiple {...register("tags")} >
+                                {tags.map((tag) => <option key={tag.id} label={tag.name} value={tag.id} />)}
+                            </Select>
+                        </InputContainer>
+                        <InputContainer label="説明" errorMessage="説明を入力してください">
+                            <TextArea required {...register("description")} />
+                        </InputContainer>
                     </div>
                 </div>
                 <div className="mt-20">
                     <h2 className="text-lg font-bold">出品者情報</h2>
                     <div className="mt-4 flex flex-col gap-10">
-                        <Label>名前</Label>
-                        <TextInputCore required {...register("name")} />
-                        {errors.image && <span>名前を入力してください</span>}
-                        <Label>メールアドレス</Label>
-                        <TextInputCore type="email" required {...register("email")} />
-                        {errors.image && <span>メールアドレスを入力してください</span>}
-                        <Label>電話番号</Label>
-                        <TextInputCore type="tel" required {...register("tel")} />
-                        {errors.image && <span>電話番号を入力してください</span>}
+                        <TextInput label="名前" errorMessage="名前を入力してください" {...register("name")} />
+                        <TextInput label="メールアドレス" errorMessage="メールアドレスを入力してください" type="email" {...register("email")} />
+                        <TextInput label="電話番号" errorMessage="電話番号を入力してください" type="tel" {...register("tel")} />
                     </div>
                 </div>
                 <Button type="submit">出品する</Button>
