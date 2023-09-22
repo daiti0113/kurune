@@ -24,7 +24,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
     openGraph: {
       title: data.title,
       description: data.description,
-      images: [data?.thumbnail?.url || ''],
+      images: [data?.image || ''],
     },
   };
 }
