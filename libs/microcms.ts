@@ -1,7 +1,6 @@
 import { createClient } from 'microcms-js-sdk';
 import type {
   MicroCMSQueries,
-  MicroCMSImage,
   MicroCMSDate,
   MicroCMSContentId,
 } from 'microcms-js-sdk';
@@ -13,17 +12,6 @@ export type Tag = {
 } & MicroCMSContentId &
   MicroCMSDate;
 
-// TODO: 使っていないので後で削除する
-// ライターの型定義
-export type Seller = {
-  name: string
-  email: string
-  tel: string
-  profile: string;
-  image?: MicroCMSImage;
-} & MicroCMSContentId &
-  MicroCMSDate;
-
 // 商品の型定義
 export type Item = {
   name: string
@@ -32,10 +20,7 @@ export type Item = {
   tel: string
   title: string;
   description: string;
-  content: string;
-  thumbnail?: MicroCMSImage;
   tags?: Tag[];
-  seller?: Seller;
   image?: string;
 };
 

@@ -26,8 +26,6 @@ export default function ArticleListItem({ article }: Props) {
               src={article.image || `/noimage.png`}
               alt=""
               className="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
-              width={article.thumbnail?.width}
-              height={article.thumbnail?.height}
             />
           </picture>
         ) : (
