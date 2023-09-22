@@ -39,6 +39,14 @@ export type Item = {
   image?: string;
 };
 
+// TODO: コメント入力フォームと合わせて、型の整理をする
+export type Comment = {
+  name: string
+  email: string
+  tel: string
+  comment: string
+}
+
 export type Article = Item & MicroCMSContentId & MicroCMSDate;
 
 if (!process.env.MICROCMS_SERVICE_DOMAIN) {
@@ -104,14 +112,11 @@ export const getTag = async (contentId: string, queries?: MicroCMSQueries) => {
   return detailData;
 };
 
-export type Comment = {
-  name: string
-  email: string
-  tel: string
-  comment: string
+export type PostItemPayload = Omit<Item, "tags" | "seller"> & {
+  tags: string[]
 }
 
-export const postItem = async (data: Item) => {
+export const postItem = async (data: PostItemPayload) => {
   const detailData = await client
     .create({
       endpoint: 'items',
