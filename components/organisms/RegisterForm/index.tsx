@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/atoms/Button";
 import { ImageInput } from "@/components/atoms/ImageInput";
+import { Label } from "@/components/atoms/Label";
 import { Loading } from "@/components/atoms/Loading";
 import { Select } from "@/components/atoms/Select";
 import { TextArea } from "@/components/atoms/TextArea";
@@ -52,21 +53,21 @@ export const RegisterForm = ({ tags }: RegisterProps) => {
                 <div className="mt-10">
                     <h2 className="text-lg font-bold">商品情報</h2>
                     <div className="mt-4 flex flex-col gap-10">
-                            <label>商品画像</label>
+                            <Label>商品画像</Label>
                                 <ImageInput {...register("image")} />
                                 {errors.image && <span>画像を添付してください</span>}
-                            <label>タイトル</label>
+                            <Label>タイトル</Label>
                                 <TextInput required {...register("title")} />
                                 {errors.image && <span>タイトルを入力してください</span>}
-                            <label>価格</label>
+                            <Label>価格</Label>
                                 <TextInput required type="number" {...register("price", {valueAsNumber: true})} />
                                 {errors.image && <span>タイトルを入力してください</span>}
-                            <label>カテゴリ（複数選択可）</label>
+                            <Label>カテゴリ（複数選択可）</Label>
                                 <Select required multiple {...register("tags")} >
                                     {tags.map((tag) => <option key={tag.id} label={tag.name} value={tag.id} />)}
                                 </Select>
                                 {errors.image && <span>タイトルを入力してください</span>}
-                            <label>説明</label>
+                            <Label>説明</Label>
                                 <TextArea required {...register("description")} />
                                 {errors.image && <span>説明を入力してください</span>}
                     </div>
@@ -74,13 +75,13 @@ export const RegisterForm = ({ tags }: RegisterProps) => {
                 <div className="mt-20">
                     <h2 className="text-lg font-bold">出品者情報</h2>
                     <div className="mt-4 flex flex-col gap-10">
-                            <label>名前</label>
+                            <Label>名前</Label>
                                 <TextInput required {...register("name")} />
                                 {errors.image && <span>名前を入力してください</span>}
-                            <label>メールアドレス</label>
+                            <Label>メールアドレス</Label>
                                 <TextInput type="email" required {...register("email")} />
                                 {errors.image && <span>メールアドレスを入力してください</span>}
-                            <label>電話番号</label>
+                            <Label>電話番号</Label>
                                 <TextInput type="tel" required {...register("tel")} />
                                 {errors.image && <span>電話番号を入力してください</span>}
                     </div>
