@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/atoms/Button";
 import { TextArea } from "@/components/atoms/TextArea";
-import { TextInput } from "@/components/atoms/TextInput";
+import { TextInputCore } from "@/components/atoms/TextInputCore";
 import { FormControl } from "@/components/organisms/Form/FormControl";
 import { FormField } from "@/components/organisms/Form/FormField";
 import { FormLabel } from "@/components/organisms/Form/FormLabel";
@@ -50,7 +50,7 @@ export const CommentForm: React.FC<CommentFormProps> = ({article}) => {
                         <FormField name="name">
                             <FormLabel>名前</FormLabel>
                             <FormControl asChild>
-                                <TextInput required />
+                                <TextInputCore required />
                             </FormControl>
                             <FormMessage match="valueMissing">
                                 名前を入力してください
@@ -59,7 +59,7 @@ export const CommentForm: React.FC<CommentFormProps> = ({article}) => {
                         <FormField name="email">
                             <FormLabel>メールアドレス</FormLabel>
                             <FormControl asChild>
-                                <TextInput type="email" required />
+                                <TextInputCore type="email" required />
                             </FormControl>
                             <FormMessage match="valueMissing">
                                 メールアドレスを入力してください
@@ -69,7 +69,7 @@ export const CommentForm: React.FC<CommentFormProps> = ({article}) => {
                         <FormField name="tel">
                             <FormLabel>電話番号</FormLabel>
                             <FormControl asChild>
-                                <TextInput type="tel" required />
+                                <TextInputCore type="tel" required />
                             </FormControl>
                             <FormMessage match="valueMissing">
                                 電話番号を入力してください
