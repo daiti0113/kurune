@@ -60,6 +60,9 @@ const MobileHeader = () => {
                     <li>
                         <Link href="/categories" className={`block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-black`}>カテゴリ一覧</Link>
                     </li>
+                    <li>
+                        <Link href={CONTACT_URL} target="_blank" className={`block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-black`}>お問い合わせ</Link>
+                    </li>
                 </ul>
             </div>
         )}
