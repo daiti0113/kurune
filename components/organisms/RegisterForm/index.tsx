@@ -104,7 +104,7 @@ export const RegisterForm = ({ categories }: RegisterProps) => {
                         <TextInput label="電話番号" errorMessage={errors.tel?.message} type="tel" {...register("tel", options.tel)} />
                     </div>
                 </div>
-                <Button type="submit">出品する</Button>
+                <Button type="submit" className="w-full mt-20">出品する</Button>
             </form>
         </div>
     )
