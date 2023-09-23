@@ -2,8 +2,9 @@
 
 import { useCallback, useRef, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import styles from './index.module.css';
 
+
+// TODO: 検索実行ボタンを付ける
 export default function SearchField() {
   const [composing, setComposition] = useState(false);
   const startComposition = () => setComposition(true);
