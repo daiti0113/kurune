@@ -57,8 +57,10 @@ export const CommentForm: React.FC<CommentFormProps> = ({article}) => {
         setIsLoading(false)
     })
 
+    // 検索実行ボタン
     return (
         <div className="mt-16">
+            {/* TODO: ラベルを考える */}
             <h1 className="text-2xl font-bold text-neutral-400">この商品について問い合わせる</h1>
             <form onSubmit={onSubmit}>
                 <div>
