@@ -1,10 +1,9 @@
 import { RegisterForm } from "@/components/organisms/RegisterForm";
-import { LIMIT } from "@/constants";
 import { getCategoryList } from "@/libs/microcms";
 
 export default async function Register() {
     const { contents } = await getCategoryList({
-        limit: LIMIT,
+        limit: 100,
     });
 
     return <RegisterForm categories={contents} />
