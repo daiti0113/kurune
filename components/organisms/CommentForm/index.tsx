@@ -71,7 +71,7 @@ export const CommentForm: React.FC<CommentFormProps> = ({article}) => {
                         </InputContainer>
                     </div>
                 </div>
-                <Button type="submit" isLoading={isLoading}>問い合わせる</Button>
+                <Button type="submit" className="w-full mt-10 max-w-[500px]" isLoading={isLoading}>問い合わせる</Button>
             </form>
         </div>
     )
