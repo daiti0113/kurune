@@ -27,6 +27,11 @@ const PcHeader = () => {
       <div className="ml-8">
         <SearchField />
       </div>
+      <nav className="ml-auto md:flex gap-8 mr-6">
+        <Link href="/" className="text-sm hover:text-gray-500 transition duration-100">ホーム</Link>
+        <Link href="/categories" className="text-sm hover:text-gray-500 transition duration-100">カテゴリ一覧</Link>
+        <Link href={CONTACT_URL} target="_blank" className="text-sm hover:text-gray-500 transition duration-100">お問い合わせ</Link>
+      </nav>
     </header>
   )
 }
