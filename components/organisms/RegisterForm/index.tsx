@@ -8,7 +8,7 @@ import { TextArea } from "@/components/atoms/TextArea";
 import { InputContainer } from "@/components/molecules/InputContainer";
 import { TextInput } from "@/components/molecules/TextInput";
 import { useUpload } from "@/hooks/s3";
-import { PostItemPayload, Tag } from "@/libs/microcms";
+import { PostItemPayload, Category } from "@/libs/microcms";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -19,7 +19,7 @@ type FormData = Omit<PostItemPayload, "image"> & {
 }
 
 type RegisterProps = {
-    tags: Tag[]
+    categories: Category[]
 }
 
 const options: {[key in keyof FormData]?: RegisterOptions<FormData, key>} = {
@@ -33,7 +33,7 @@ const options: {[key in keyof FormData]?: RegisterOptions<FormData, key>} = {
        required: "価格を入力してください",
        valueAsNumber: true
     },
-    tags:{
+    categories:{
        required: "カテゴリを選択してください",
     },
     description: {
@@ -54,7 +54,7 @@ const options: {[key in keyof FormData]?: RegisterOptions<FormData, key>} = {
     },
 }
 
-export const RegisterForm = ({ tags }: RegisterProps) => {
+export const RegisterForm = ({ categories }: RegisterProps) => {
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(false)
     const { upload } = useUpload()
@@ -86,9 +86,9 @@ export const RegisterForm = ({ tags }: RegisterProps) => {
                         </InputContainer>
                         <TextInput label="タイトル" errorMessage={errors.title?.message} {...register("title", options.title)} />
                         <TextInput label="価格" errorMessage={errors.price?.message} type="number" {...register("price", options.price)} />
-                        <InputContainer label="カテゴリ（複数選択可）" errorMessage={errors.tags?.message}>
-                            <Select multiple {...register("tags", options.tags)} >
-                                {tags.map((tag) => <option key={tag.id} value={tag.id}>{tag.name}</option>)}
+                        <InputContainer label="カテゴリ（複数選択可）" errorMessage={errors.categories?.message}>
+                            <Select multiple {...register("categories", options.categories)} >
+                                {categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}
                             </Select>
                         </InputContainer>
                         <InputContainer label="説明" errorMessage={errors.description?.message}>

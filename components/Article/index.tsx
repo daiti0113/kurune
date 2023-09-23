@@ -1,7 +1,7 @@
 import { type Article } from '@/libs/microcms';
 import PublishedDate from '../Date';
 import styles from './index.module.css';
-import TagList from '../TagList';
+import CategoryList from '../CategoryList';
 import { CommentForm } from '../organisms/CommentForm';
 
 type Props = {
@@ -30,7 +30,7 @@ export default function Article({ data }: Props) {
         </picture>
         <div className="flex-1 w-full">
           <h1 className="text-2xl font-bold">{data.title}</h1>
-          <TagList tags={data.tags} />
+          <CategoryList categories={data.categories} />
           <span className="text-neutral-600">¥<span className="text-2xl font-semibold text-primary-500">{data.price.toLocaleString()}</span></span>
           <div>
             <p className="my-10 whitespace-pre-wrap">{data.description}</p>

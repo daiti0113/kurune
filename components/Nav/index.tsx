@@ -1,15 +1,15 @@
-import { Tag } from '@/libs/microcms';
-import TagList from '@/components/TagList';
+import { Category } from '@/libs/microcms';
+import CategoryList from '@/components/CategoryList';
 import styles from './index.module.css';
 
 type Props = {
-  tags: Tag[];
+  categories: Category[];
 };
 
-export default function Nav({ tags }: Props) {
+export default function Nav({ categories }: Props) {
   return (
     <nav className="flex flex-col items-center justify-center gap-2 px-6 pb-6 mb-8 border-b-[1px]">
-      <TagList tags={tags} />
+      <CategoryList categories={categories} />
     </nav>
   );
 }

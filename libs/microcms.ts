@@ -7,7 +7,7 @@ import type {
 import { notFound } from 'next/navigation';
 
 // タグの型定義
-export type Tag = {
+export type Category = {
   name: string;
 } & MicroCMSContentId &
   MicroCMSDate;
@@ -20,7 +20,7 @@ export type Item = {
   tel: string
   title: string;
   description: string;
-  tags?: Tag[];
+  categories?: Category[];
   image?: string;
 };
 
@@ -72,10 +72,10 @@ export const getDetail = async (contentId: string, queries?: MicroCMSQueries) =>
 };
 
 // タグの一覧を取得
-export const getTagList = async (queries?: MicroCMSQueries) => {
+export const getCategoryList = async (queries?: MicroCMSQueries) => {
   const listData = await client
-    .getList<Tag>({
-      endpoint: 'tags',
+    .getList<Category>({
+      endpoint: 'categories',
       queries,
     })
     .catch(notFound);
@@ -84,10 +84,10 @@ export const getTagList = async (queries?: MicroCMSQueries) => {
 };
 
 // タグの詳細を取得
-export const getTag = async (contentId: string, queries?: MicroCMSQueries) => {
+export const getCategory = async (contentId: string, queries?: MicroCMSQueries) => {
   const detailData = await client
-    .getListDetail<Tag>({
-      endpoint: 'tags',
+    .getListDetail<Category>({
+      endpoint: 'categories',
       contentId,
       queries,
     })
@@ -96,8 +96,8 @@ export const getTag = async (contentId: string, queries?: MicroCMSQueries) => {
   return detailData;
 };
 
-export type PostItemPayload = Omit<Item, "tags" | "seller"> & {
-  tags: string[]
+export type PostItemPayload = Omit<Item, "categories" | "seller"> & {
+  categories: string[]
 }
 
 export const postItem = async (data: PostItemPayload) => {

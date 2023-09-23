@@ -1,4 +1,4 @@
-import { getTagList } from '@/libs/microcms';
+import { getCategoryList } from '@/libs/microcms';
 import { LIMIT } from '@/constants';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -29,7 +29,7 @@ type Props = {
 };
 
 export default async function RootLayout({ children }: Props) {
-  const tags = await getTagList({
+  const categories = await getCategoryList({
     limit: LIMIT,
   });
   return (
@@ -37,7 +37,7 @@ export default async function RootLayout({ children }: Props) {
       <html lang="ja">
         <body className="h-screen flex flex-col">
           <Header />
-          <Nav tags={tags.contents} />
+          <Nav categories={categories.contents} />
           <Suspense fallback={<Loading />}>
             <main className="flex flex-col flex-1 px-6">{children}</main>
           </Suspense>
