@@ -75,7 +75,7 @@ export const RegisterForm = ({ categories }: RegisterProps) => {
     });
 
     return isLoading ? <Loading /> : (
-        <div>
+        <div className="w-full max-w-[500px]">
             <h1 className="text-xl font-bold">出品する</h1>
             <form onSubmit={onSubmit}>
                 <div className="mt-10">

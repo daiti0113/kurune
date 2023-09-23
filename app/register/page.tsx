@@ -6,5 +6,9 @@ export default async function Register() {
         limit: 100,
     });
 
-    return <RegisterForm categories={contents} />
+    return (
+        <div className="flex justify-center">
+            <RegisterForm categories={contents} />
+        </div>
+    )
 }
