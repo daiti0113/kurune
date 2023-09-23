@@ -16,7 +16,7 @@ export default async function CategoriesLayout({ children, params }: Props) {
     <div>
       <p className={styles.title}>
         <CategoryListItem category={category} hasLink={false} />
-        の記事一覧
+        の商品一覧
       </p>
       <div>{children}</div>
     </div>
