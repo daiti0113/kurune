@@ -39,6 +39,7 @@ const options: {[key in keyof FormData]?: RegisterOptions<FormData, key>} = {
     },
     categories:{
        required: "カテゴリを選択してください",
+       setValueAs: (categoryId) => [categoryId],
     },
     description: {
        required: "説明を入力してください",
@@ -96,7 +97,7 @@ export const RegisterForm = ({ categories }: RegisterProps) => {
                             </Select>
                         </InputContainer>
                         <InputContainer label="カテゴリ（複数選択可）" errorMessage={errors.categories?.message}>
-                            <Select multiple {...register("categories", options.categories)} >
+                            <Select {...register("categories", options.categories)} >
                                 {categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}
                             </Select>
                         </InputContainer>
