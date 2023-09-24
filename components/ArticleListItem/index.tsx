@@ -41,11 +41,14 @@ export default function ArticleListItem({ article }: Props) {
         <span className="relative mr-3 mb-3 inline-block rounded-lg border border-gray-500 px-2 py-1 text-xs text-gray-200 font-semibold backdrop-blur-lg md:px-3 md:text-sm">¥{article.price.toLocaleString()}</span>
       </Link>
       <dl>
-          <dt className="text-md font-bold md:text-lg lg:text-xl">{article.title}</dt>
-          <dd>
-            <CategoryList categories={article.categories} hasLink={false} />
-          </dd>
-        </dl>
+        <dt className="text-md font-bold md:text-lg lg:text-xl">{article.title}</dt>
+        <dd>
+          <div className="flex gap-2 mt-1">
+            {article.cities.map((cityName) => <span key={cityName} className="text-sm">{cityName}</span>)}
+          </div>
+          <CategoryList categories={article.categories} hasLink={false} />
+        </dd>
+      </dl>
     </div>
   );
 }

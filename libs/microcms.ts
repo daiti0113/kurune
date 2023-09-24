@@ -18,7 +18,7 @@ export type Category = {
 export type Item = {
   name: string
   price: number
-  cities: keyof typeof cityNameList
+  cities: typeof cityNameList
   email: string
   tel: string
   title: string;
