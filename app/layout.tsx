@@ -7,7 +7,6 @@ import './globals.css';
 import { Suspense } from 'react';
 import { Loading } from '@/components/atoms/Loading';
 import { Providers } from './Providers';
-import Head from 'next/head';
 
 export const metadata = {
   metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
@@ -34,11 +33,11 @@ export default async function RootLayout({ children }: Props) {
   return (
     <Providers>
       <html lang="ja">
-        <Head>
+        <head>
           <link rel="manifest" href="/manifest.json" />
           <link rel="apple-touch-icon" href="/icon.png"></link>
           <meta name="theme-color" content="#fff" />
-        </Head>
+        </head>
         <body className="h-screen flex flex-col">
           <Header />
           <Nav categories={categories.contents} />
