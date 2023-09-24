@@ -38,7 +38,7 @@ export default function ArticleListItem({ article }: Props) {
           />
         )}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50"></div>
-        <span className="relative mr-3 mb-3 inline-block rounded-lg border border-gray-500 px-2 py-1 text-xs text-gray-200 font-semibold backdrop-blur-lg md:px-3 md:text-sm">¥{article.price.toLocaleString()}</span>
+        <span className="relative mr-3 mb-3 inline-block rounded-lg border border-gray-500 px-2 py-1 text-sm text-gray-200 font-semibold backdrop-blur-lg md:px-3 md:text-md">¥{article.price.toLocaleString()}</span>
       </Link>
       <dl>
         <dt className="text-md font-bold md:text-lg lg:text-xl">{article.title}</dt>
