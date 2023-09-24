@@ -34,6 +34,7 @@ const PcHeader = () => {
         <nav className="ml-auto md:flex gap-8 mr-6">
           <Link href="/" className="text-sm hover:text-gray-500 transition duration-100">ホーム</Link>
           <Link href="/categories" className="text-sm hover:text-gray-500 transition duration-100">カテゴリ一覧</Link>
+          <Link href="/register" className="text-sm hover:text-gray-500 transition duration-100">出品する</Link>
           <Link href={CONTACT_URL} target="_blank" className="text-sm hover:text-gray-500 transition duration-100">お問い合わせ</Link>
         </nav>
       </div>
@@ -72,6 +73,9 @@ const MobileHeader = () => {
                     </li>
                     <li>
                         <Link href="/categories" className={`block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-black`}>カテゴリ一覧</Link>
+                    </li>
+                    <li>
+                        <Link href="/register" className={`block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-black`}>出品する</Link>
                     </li>
                     <li>
                         <Link href={CONTACT_URL} target="_blank" className={`block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-black`}>お問い合わせ</Link>
