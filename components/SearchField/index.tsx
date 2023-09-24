@@ -6,19 +6,18 @@ import { useSearchParams } from 'next/navigation';
 
 export default function SearchField() {
   const [composing, setComposition] = useState(false);
-  const [keyword, setKeyword] = useState<string>()
   const startComposition = () => setComposition(true);
   const endComposition = () => setComposition(false);
   const _onEnter: React.KeyboardEventHandler<HTMLInputElement> = useCallback(
     (e) => {
       if (e.code === 'Enter' && !composing) {
-        location.href = `/search?q=${keyword}`;
+        location.href = `/search?q=${inputRef.current?.value}`;
       }
     },
-    [composing, keyword],
+    [composing]
   );
   const onClick = () => {
-    location.href = `/search?q=${keyword}`;
+    location.href = `/search?q=${inputRef.current?.value}`;
   }
   const inputRef = useRef<HTMLInputElement>(null);
   const searchParams = useSearchParams();
@@ -35,7 +34,6 @@ export default function SearchField() {
         onCompositionStart={startComposition}
         onCompositionEnd={endComposition}
         defaultValue={defaultQuery}
-        onChange={(e) => setKeyword(e.currentTarget.value)}
       />
       <div className="bg-[url('/search.svg')] bg-no-repeat h-4 w-4 bg-primary-500 p-4 bg-center rounded-full" onClick={onClick} />
     </label>
