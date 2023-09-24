@@ -36,7 +36,7 @@ export default async function RootLayout({ children }: Props) {
         <head>
           <link rel="manifest" href="/manifest.json" />
           <link rel="apple-touch-icon" href="/icon.png"></link>
-          <meta name="theme-color" content="#fff" />
+          <meta name="theme-color" content="#208da0" />
         </head>
         <body className="h-screen flex flex-col">
           <Header />
