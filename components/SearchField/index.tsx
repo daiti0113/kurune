@@ -23,7 +23,7 @@ export default function SearchField() {
   const searchParams = useSearchParams();
   const defaultQuery = searchParams.get('q') || '';
   return (
-    <label className="flex pr-1 pl-4 border-2 rounded-full border-black max-w-xl w-full h-10 items-center">
+    <div className="flex pr-1 pl-4 border-2 rounded-full border-black max-w-xl w-full h-10 items-center">
       <input
         type="search"
         name="q"
@@ -36,6 +36,6 @@ export default function SearchField() {
         defaultValue={defaultQuery}
       />
       <div className="bg-[url('/search.svg')] bg-no-repeat h-4 w-4 bg-primary-500 p-4 bg-center rounded-full" onClick={onClick} />
-    </label>
+    </div>
   );
 }
