@@ -7,6 +7,7 @@ import { Select } from "@/components/atoms/Select";
 import { TextArea } from "@/components/atoms/TextArea";
 import { InputContainer } from "@/components/molecules/InputContainer";
 import { TextInput } from "@/components/molecules/TextInput";
+import { cities } from "@/constants";
 import { useUpload } from "@/hooks/s3";
 import { PostItemPayload, Category } from "@/libs/microcms";
 import { useMutation } from "@tanstack/react-query";
@@ -32,6 +33,9 @@ const options: {[key in keyof FormData]?: RegisterOptions<FormData, key>} = {
     price: {
        required: "価格を入力してください",
        valueAsNumber: true
+    },
+    cities: {
+        required: "受け渡し場所を入力してください",
     },
     categories:{
        required: "カテゴリを選択してください",
@@ -86,6 +90,11 @@ export const RegisterForm = ({ categories }: RegisterProps) => {
                         </InputContainer>
                         <TextInput label="タイトル" errorMessage={errors.title?.message} {...register("title", options.title)} />
                         <TextInput label="価格" errorMessage={errors.price?.message} type="number" {...register("price", options.price)} />
+                        <InputContainer label="受け渡し場所（複数選択可）" errorMessage={errors.categories?.message}>
+                            <Select multiple {...register("cities", options.cities)} >
+                                {cities.map((city) => <option key={city.id} value={city.name}>{city.name}</option>)}
+                            </Select>
+                        </InputContainer>
                         <InputContainer label="カテゴリ（複数選択可）" errorMessage={errors.categories?.message}>
                             <Select multiple {...register("categories", options.categories)} >
                                 {categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}

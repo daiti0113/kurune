@@ -5,6 +5,7 @@ import type {
   MicroCMSContentId,
 } from 'microcms-js-sdk';
 import { notFound } from 'next/navigation';
+import { cityNameList } from '@/constants';
 
 // タグの型定義
 export type Category = {
@@ -12,10 +13,12 @@ export type Category = {
 } & MicroCMSContentId &
   MicroCMSDate;
 
+  
 // 商品の型定義
 export type Item = {
   name: string
   price: number
+  cities: keyof typeof cityNameList
   email: string
   tel: string
   title: string;
