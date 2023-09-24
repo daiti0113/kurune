@@ -15,7 +15,7 @@ export default function Header() {
 const PcHeader = () => {
   return (
     <header>
-      <div className="bg-neutral-300 text-neutral-600 text-xs md:text-sm py-2 px-6">
+      <div className="bg-primary-500 text-white text-xs md:text-sm py-2 px-6">
       【会員登録不要】沖縄県内限定｜手渡しのみのフリマサイト
       </div>
       <div className="px-6 mt-2 flex items-center">
@@ -46,7 +46,7 @@ const MobileHeader = () => {
   const [menuVisible, setMenuVisible] = useState(false)
   return (
     <header>
-      <div className="bg-neutral-300 text-neutral-600 text-xs md:text-sm py-2 px-6">
+      <div className="bg-primary-500 text-white text-xs md:text-sm py-2 px-6">
         【会員登録不要】沖縄県内限定｜手渡しのみのフリマサイト
       </div>
       <div className="flex mt-2">
