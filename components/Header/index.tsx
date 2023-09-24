@@ -14,24 +14,29 @@ export default function Header() {
 
 const PcHeader = () => {
   return (
-    <header className="px-6 flex items-center">
-      <Link href="/">
-        <Image
-          src="/logo.png"
-          alt="SIMPLE"
-          width={200}
-          height={80}
-          priority
-        />
-      </Link>
-      <div className="ml-8">
-        <SearchField />
+    <header>
+      <div className="bg-neutral-300 text-neutral-600 text-xs md:text-sm py-2 px-6">
+      【会員登録不要】沖縄県内限定｜手渡しのみのフリマサイト
       </div>
-      <nav className="ml-auto md:flex gap-8 mr-6">
-        <Link href="/" className="text-sm hover:text-gray-500 transition duration-100">ホーム</Link>
-        <Link href="/categories" className="text-sm hover:text-gray-500 transition duration-100">カテゴリ一覧</Link>
-        <Link href={CONTACT_URL} target="_blank" className="text-sm hover:text-gray-500 transition duration-100">お問い合わせ</Link>
-      </nav>
+      <div className="px-6 mt-2 flex items-center">
+        <Link href="/">
+          <Image
+            src="/logo.png"
+            alt="SIMPLE"
+            width={200}
+            height={80}
+            priority
+          />
+        </Link>
+        <div className="ml-8">
+          <SearchField />
+        </div>
+        <nav className="ml-auto md:flex gap-8 mr-6">
+          <Link href="/" className="text-sm hover:text-gray-500 transition duration-100">ホーム</Link>
+          <Link href="/categories" className="text-sm hover:text-gray-500 transition duration-100">カテゴリ一覧</Link>
+          <Link href={CONTACT_URL} target="_blank" className="text-sm hover:text-gray-500 transition duration-100">お問い合わせ</Link>
+        </nav>
+      </div>
     </header>
   )
 }
@@ -39,8 +44,11 @@ const PcHeader = () => {
 const MobileHeader = () => {
   const [menuVisible, setMenuVisible] = useState(false)
   return (
-    <header className="">
-      <div className="flex">
+    <header>
+      <div className="bg-neutral-300 text-neutral-600 text-xs md:text-sm py-2 px-6">
+        【会員登録不要】沖縄県内限定｜手渡しのみのフリマサイト
+      </div>
+      <div className="flex mt-2">
         <div className="flex-1" />
         <Link href="/" className="flex justify-center flex-auto">
           <Image
