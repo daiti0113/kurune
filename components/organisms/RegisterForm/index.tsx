@@ -61,6 +61,9 @@ const options: {[key in keyof FormData]?: RegisterOptions<FormData, key>} = {
     },
     agreement: {
         required: "このサービスを利用するには、プライバシーポリシーと利用規約に同意する必要があります",
+    },
+    password: {
+        required: "商品の編集・削除に利用するパスワードを指定してください",
     }
 }
 
@@ -120,9 +123,12 @@ export const RegisterForm = ({ categories }: RegisterProps) => {
                     </div>
                 </div>
                 <div className="mt-20">
-                    <InputContainer errorMessage={errors.agreement?.message} >
-                        <CheckboxCore {...register("agreement", options.agreement)} label={<><Link href={"/privacy"} target="_blank" className="text-primary-500 underline">プライバシーポリシー</Link>、<Link href={"/tos"} target="_blank" className="text-primary-500 underline">利用規約</Link> に同意する</>} />
-                    </InputContainer>
+                    <div className="mt-4 flex flex-col gap-10">
+                        <TextInput type="password" autoComplete="off" label="編集用パスワード" errorMessage={errors.password?.message} {...register("password", options.password)} />
+                        <InputContainer errorMessage={errors.agreement?.message} >
+                            <CheckboxCore {...register("agreement", options.agreement)} label={<><Link href={"/privacy"} target="_blank" className="text-primary-500 underline">プライバシーポリシー</Link>、<Link href={"/tos"} target="_blank" className="text-primary-500 underline">利用規約</Link> に同意する</>} />
+                        </InputContainer>
+                    </div>
                 </div>
                 <Button type="submit" className="w-full mt-10">出品する</Button>
             </form>
