@@ -3,6 +3,7 @@ import PublishedDate from '../Date';
 import styles from './index.module.css';
 import CategoryList from '../CategoryList';
 import { CommentForm } from '../organisms/CommentForm';
+import Link from 'next/link';
 
 type Props = {
   data: Article;
@@ -36,6 +37,7 @@ export default function Article({ data }: Props) {
             <p className="my-10 whitespace-pre-wrap">{data.description}</p>
           </div>
           <PublishedDate date={data.publishedAt || data.createdAt} />
+          <Link href={`/articles/${data.id}/edit`} className="text-primary-500 underline">商品を編集する</Link>
           <CommentForm article={data} />
         </div>
       </div>
