@@ -101,13 +101,13 @@ export const RegisterForm = ({ categories, defaultValue }: RegisterProps) => {
                         <TextInput label="タイトル" errorMessage={errors.title?.message} {...register("title", options.title)} defaultValue={defaultValue?.title} />
                         <TextInput label="価格" errorMessage={errors.price?.message} type="number" {...register("price", options.price)} defaultValue={defaultValue?.price} />
                         <InputContainer label="受け渡し場所（複数選択可）" errorMessage={errors.cities?.message}>
-                            <Select multiple {...register("cities", options.cities)} >
-                                {cities.map((city) => <option key={city.id} value={city.name} selected={defaultValue?.cities.includes(city.name)}>{city.name}</option>)}
+                            <Select multiple {...register("cities", options.cities)} defaultValue={defaultValue?.cities}>
+                                {cities.map((city) => <option key={city.id} value={city.name}>{city.name}</option>)}
                             </Select>
                         </InputContainer>
-                        <InputContainer label="カテゴリ（複数選択可）" errorMessage={errors.categories?.message}>
-                            <Select {...register("categories", options.categories)} >
-                                {categories.map((category) => <option key={category.id} value={category.id} selected={defaultValue?.categories?.some(({ id }) => id === category.id)}>{category.name}</option>)}
+                        <InputContainer label="カテゴリ" errorMessage={errors.categories?.message}>
+                            <Select {...register("categories", options.categories)} defaultValue={defaultValue?.categories?.[0].id}>
+                                {categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}
                             </Select>
                         </InputContainer>
                         <InputContainer label="説明" errorMessage={errors.description?.message}>
