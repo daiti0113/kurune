@@ -12,6 +12,8 @@ export default function Header() {
   return width > 960 ? <PcHeader /> : <MobileHeader />;
 }
 
+// TODO: PCとSPのコンポーネントまとめる
+// TODO: メニューを別コンポーネントに切り出す
 const PcHeader = () => {
   return (
     <header>
