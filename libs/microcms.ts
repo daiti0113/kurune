@@ -115,6 +115,21 @@ export const postItem = async (data: PostItemPayload) => {
   return detailData;
 };
 
+export type PatchItemPayload = Omit<Item, "categories" | "seller"> & {
+  id: string
+  categories: string[]
+}
+
+export const patchItem = async ({id: contentId, ...data}: PatchItemPayload) => {
+  const detailData = await client
+    .update({
+      endpoint: 'items',
+      contentId,
+      content: data
+    })
+  return detailData;
+};
+
 export type PostCommentPayload = Comment
 
 export const postComment = async (data: PostCommentPayload) => {

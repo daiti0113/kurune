@@ -10,19 +10,20 @@ import { InputContainer } from "@/components/molecules/InputContainer";
 import { TextInput } from "@/components/molecules/TextInput";
 import { cities } from "@/constants";
 import { useUpload } from "@/hooks/s3";
-import { PostItemPayload, Category } from "@/libs/microcms";
+import { PostItemPayload, Category, Article, PatchItemPayload } from "@/libs/microcms";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { RegisterOptions, useForm } from "react-hook-form";
 
-type FormData = Omit<PostItemPayload, "image"> & {
+type FormData = Omit<PostItemPayload | PatchItemPayload, "image"> & {
     image: FileList
 }
 
 type RegisterProps = {
     categories: Category[]
+    defaultValue?: Article
 }
 
 const options: {[key in keyof FormData]?: RegisterOptions<FormData, key>} = {
@@ -67,15 +68,15 @@ const options: {[key in keyof FormData]?: RegisterOptions<FormData, key>} = {
     }
 }
 
-export const RegisterForm = ({ categories }: RegisterProps) => {
+export const RegisterForm = ({ categories, defaultValue }: RegisterProps) => {
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(false)
     const { upload } = useUpload()
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
 
     const mutation = useMutation({
-        mutationFn: async (data: PostItemPayload) => {
-            const res = await fetch("/api/items/create", { method: "POST", body: JSON.stringify(data) })
+        mutationFn: async (data: PostItemPayload | PatchItemPayload) => {
+            const res = await fetch(`/api/items/${defaultValue ? "edit" : "create"}`, { method: defaultValue ? "PATCH" : "POST", body: JSON.stringify({...data, id: defaultValue?.id}) })
             const parsed = await res.json()
             router.push(`/articles/${parsed.id}`)
         },
@@ -89,7 +90,7 @@ export const RegisterForm = ({ categories }: RegisterProps) => {
 
     return isLoading ? <Loading /> : (
         <div className="w-full max-w-[500px]">
-            <h1 className="text-xl font-bold">出品する</h1>
+            <h1 className="text-xl font-bold">{defaultValue ? "商品を編集する" : "出品する"}</h1>
             <form onSubmit={onSubmit}>
                 <div className="mt-10">
                     <h2 className="text-lg font-bold">商品情報</h2>
@@ -97,20 +98,20 @@ export const RegisterForm = ({ categories }: RegisterProps) => {
                         <InputContainer label="商品画像" errorMessage={errors.image?.message}>
                             <ImageInput {...register("image", options.image)} />
                         </InputContainer>
-                        <TextInput label="タイトル" errorMessage={errors.title?.message} {...register("title", options.title)} />
-                        <TextInput label="価格" errorMessage={errors.price?.message} type="number" {...register("price", options.price)} />
+                        <TextInput label="タイトル" errorMessage={errors.title?.message} {...register("title", options.title)} defaultValue={defaultValue?.title} />
+                        <TextInput label="価格" errorMessage={errors.price?.message} type="number" {...register("price", options.price)} defaultValue={defaultValue?.price} />
                         <InputContainer label="受け渡し場所（複数選択可）" errorMessage={errors.cities?.message}>
                             <Select multiple {...register("cities", options.cities)} >
-                                {cities.map((city) => <option key={city.id} value={city.name}>{city.name}</option>)}
+                                {cities.map((city) => <option key={city.id} value={city.name} selected={defaultValue?.cities.includes(city.name)}>{city.name}</option>)}
                             </Select>
                         </InputContainer>
                         <InputContainer label="カテゴリ（複数選択可）" errorMessage={errors.categories?.message}>
                             <Select {...register("categories", options.categories)} >
-                                {categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}
+                                {categories.map((category) => <option key={category.id} value={category.id} selected={defaultValue?.categories?.some(({ id }) => id === category.id)}>{category.name}</option>)}
                             </Select>
                         </InputContainer>
                         <InputContainer label="説明" errorMessage={errors.description?.message}>
-                            <TextArea {...register("description", options.description)} />
+                            <TextArea {...register("description", options.description)} defaultValue={defaultValue?.description} />
                         </InputContainer>
                     </div>
                 </div>
@@ -130,7 +131,7 @@ export const RegisterForm = ({ categories }: RegisterProps) => {
                         </InputContainer>
                     </div>
                 </div>
-                <Button type="submit" className="w-full mt-10">出品する</Button>
+                <Button type="submit" className="w-full mt-10">{defaultValue ? "商品情報を更新する" : "出品する"}</Button>
             </form>
         </div>
     )

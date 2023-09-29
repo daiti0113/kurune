@@ -11,7 +11,8 @@ type Props = {
   };
 };
 
-export const revalidate = 60;
+// TODO: キャッシュ戦略を見直す
+export const revalidate = 0;
 
 export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
   const data = await getDetail(params.slug, {
