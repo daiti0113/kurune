@@ -91,7 +91,7 @@ export const RegisterForm = ({ categories }: RegisterProps) => {
                         </InputContainer>
                         <TextInput label="タイトル" errorMessage={errors.title?.message} {...register("title", options.title)} />
                         <TextInput label="価格" errorMessage={errors.price?.message} type="number" {...register("price", options.price)} />
-                        <InputContainer label="受け渡し場所（複数選択可）" errorMessage={errors.categories?.message}>
+                        <InputContainer label="受け渡し場所（複数選択可）" errorMessage={errors.cities?.message}>
                             <Select multiple {...register("cities", options.cities)} >
                                 {cities.map((city) => <option key={city.id} value={city.name}>{city.name}</option>)}
                             </Select>
