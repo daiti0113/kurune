@@ -25,6 +25,7 @@ export type Item = {
   description: string;
   categories?: Category[];
   image?: string;
+  agreement: boolean;
 };
 
 export type Comment = {

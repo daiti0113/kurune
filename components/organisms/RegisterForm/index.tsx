@@ -19,7 +19,6 @@ import { RegisterOptions, useForm } from "react-hook-form";
 
 type FormData = Omit<PostItemPayload, "image"> & {
     image: FileList
-    agreement: boolean
 }
 
 type RegisterProps = {
