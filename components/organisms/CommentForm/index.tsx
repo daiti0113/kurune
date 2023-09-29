@@ -1,12 +1,14 @@
 "use client"
 
 import { Button } from "@/components/atoms/Button";
+import { CheckboxCore } from "@/components/atoms/CheckboxCore";
 import { TextArea } from "@/components/atoms/TextArea";
 import { InputContainer } from "@/components/molecules/InputContainer";
 import { TextInput } from "@/components/molecules/TextInput";
 import { PostEmailNotifyPayload } from "@/libs/kuruneApi";
 import { Article, Comment, PostCommentPayload } from "@/libs/microcms";
 import { useMutation } from "@tanstack/react-query";
+import Link from "next/link";
 import { useState } from "react";
 import { RegisterOptions, useForm } from "react-hook-form";
 
@@ -32,6 +34,9 @@ const options: {[key in keyof FormData]?: RegisterOptions<FormData, key>} = {
      },
     comment: {
         required: "お問い合わせ内容を入力してください"
+    },
+    agreement: {
+        required: "このサービスを利用するには、プライバシーポリシーと利用規約に同意する必要があります",
     }
 }
 
@@ -68,6 +73,9 @@ export const CommentForm: React.FC<CommentFormProps> = ({article}) => {
                         <TextInput label="電話番号" errorMessage={errors.tel?.message} {...register("tel", options.tel)} type="tel" />
                         <InputContainer label="お問い合わせ内容" errorMessage={errors.comment?.message}>
                             <TextArea {...register("comment", options.comment)} />
+                        </InputContainer>
+                        <InputContainer errorMessage={errors.agreement?.message} >
+                            <CheckboxCore {...register("agreement", options.agreement)} label={<><Link href={"/privacy"} target="_blank" className="text-primary-500 underline">プライバシーポリシー</Link>、<Link href={"/tos"} target="_blank" className="text-primary-500 underline">利用規約</Link> に同意する</>} />
                         </InputContainer>
                     </div>
                 </div>

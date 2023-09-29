@@ -32,6 +32,7 @@ export type Comment = {
   email: string
   tel: string
   comment: string
+  agreement: boolean
 }
 
 export type Article = Item & MicroCMSContentId & MicroCMSDate;
