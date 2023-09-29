@@ -1,6 +1,7 @@
 "use client"
 
 import { Button } from "@/components/atoms/Button";
+import { CheckboxCore } from "@/components/atoms/CheckboxCore";
 import { ImageInput } from "@/components/atoms/ImageInput";
 import { Loading } from "@/components/atoms/Loading";
 import { Select } from "@/components/atoms/Select";
@@ -11,12 +12,14 @@ import { cities } from "@/constants";
 import { useUpload } from "@/hooks/s3";
 import { PostItemPayload, Category } from "@/libs/microcms";
 import { useMutation } from "@tanstack/react-query";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { RegisterOptions, useForm } from "react-hook-form";
 
 type FormData = Omit<PostItemPayload, "image"> & {
     image: FileList
+    agreement: boolean
 }
 
 type RegisterProps = {
@@ -57,6 +60,9 @@ const options: {[key in keyof FormData]?: RegisterOptions<FormData, key>} = {
     tel: {
        required: "電話番号を入力してください",
     },
+    agreement: {
+        required: "このサービスを利用するには、プライバシーポリシーと利用規約に同意する必要があります",
+    }
 }
 
 export const RegisterForm = ({ categories }: RegisterProps) => {
@@ -114,7 +120,12 @@ export const RegisterForm = ({ categories }: RegisterProps) => {
                         <TextInput label="電話番号" errorMessage={errors.tel?.message} type="tel" {...register("tel", options.tel)} />
                     </div>
                 </div>
-                <Button type="submit" className="w-full mt-20">出品する</Button>
+                <div className="mt-20">
+                    <InputContainer errorMessage={errors.agreement?.message} >
+                        <CheckboxCore {...register("agreement", options.agreement)} label={<><Link href={"/privacy"} target="_blank" className="text-primary-500 underline">プライバシーポリシー</Link>、<Link href={"/tos"} target="_blank" className="text-primary-500 underline">利用規約</Link> に同意する</>} />
+                    </InputContainer>
+                </div>
+                <Button type="submit" className="w-full mt-10">出品する</Button>
             </form>
         </div>
     )
