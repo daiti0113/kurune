@@ -9,6 +9,7 @@ import { PostEmailNotifyPayload } from "@/libs/kuruneApi";
 import { Article, Comment, PostCommentPayload } from "@/libs/microcms";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { RegisterOptions, useForm } from "react-hook-form";
 
@@ -43,6 +44,7 @@ const options: {[key in keyof FormData]?: RegisterOptions<FormData, key>} = {
 export const CommentForm: React.FC<CommentFormProps> = ({article}) => {
     const [isLoading, setIsLoading] = useState(false)
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
+    const router = useRouter()
 
     const createCommentMutation = useMutation({
         mutationFn: async (data: PostCommentPayload) => {
@@ -59,7 +61,7 @@ export const CommentForm: React.FC<CommentFormProps> = ({article}) => {
         await createCommentMutation.mutateAsync(data)
         await sendEmailMutation.mutateAsync(data)
         reset()
-        setIsLoading(false)
+        router.push(`/comment/complate?item=${article.id}`)
     })
 
     return (
