@@ -91,12 +91,18 @@ export const RegisterForm = ({ categories, defaultValue }: RegisterProps) => {
     return isLoading ? <div className="flex h-full items-center justify-center"><Loading /></div> : (
         <div className="w-full max-w-[500px]">
             <h1 className="text-xl font-bold">{defaultValue ? "商品を編集する" : "出品する"}</h1>
+            {defaultValue && (
+                <div className="mt-6 text-sm">
+                    <p>メールアドレスと編集用パスワードの組み合わせが正しいのみ編集が可能です。</p>
+                    <p>個人情報については、再度入力をお願いいたします。</p>
+                </div>
+            )}
             <form onSubmit={onSubmit}>
                 <div className="mt-10">
                     <h2 className="text-lg font-bold">商品情報</h2>
                     <div className="mt-4 flex flex-col gap-10">
                         <InputContainer label="商品画像" errorMessage={errors.image?.message}>
-                            <ImageInput {...register("image", options.image)} />
+                            <ImageInput {...register("image", defaultValue ? undefined : options.image)} />
                         </InputContainer>
                         <TextInput label="タイトル" errorMessage={errors.title?.message} {...register("title", options.title)} defaultValue={defaultValue?.title} />
                         <TextInput label="価格" errorMessage={errors.price?.message} type="number" {...register("price", options.price)} defaultValue={defaultValue?.price} />
