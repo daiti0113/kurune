@@ -102,7 +102,7 @@ export const RegisterForm = ({ categories, defaultValue }: RegisterProps) => {
                     <h2 className="text-lg font-bold">商品情報</h2>
                     <div className="mt-4 flex flex-col gap-10">
                         <InputContainer label="商品画像" errorMessage={errors.image?.message}>
-                            <ImageInput {...register("image", defaultValue ? undefined : options.image)} />
+                            <ImageInput {...register("image", options.image)} />
                         </InputContainer>
                         <TextInput label="タイトル" errorMessage={errors.title?.message} {...register("title", options.title)} defaultValue={defaultValue?.title} />
                         <TextInput label="価格" errorMessage={errors.price?.message} type="number" {...register("price", options.price)} defaultValue={defaultValue?.price} />
