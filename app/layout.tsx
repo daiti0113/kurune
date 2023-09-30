@@ -41,7 +41,7 @@ export default async function RootLayout({ children }: Props) {
         <body className="h-screen flex flex-col">
           <Header />
           <Nav categories={categories.contents} />
-          <Suspense fallback={<Loading />}>
+          <Suspense fallback={<div className="flex h-full items-center justify-center"><Loading /></div>}>
             <main className="flex flex-col flex-1 px-6">{children}</main>
           </Suspense>
           <Footer />

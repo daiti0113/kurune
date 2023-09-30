@@ -88,7 +88,7 @@ export const RegisterForm = ({ categories, defaultValue }: RegisterProps) => {
         fileUrl && await mutation.mutateAsync({...data, image: fileUrl})
     });
 
-    return isLoading ? <Loading /> : (
+    return isLoading ? <div className="flex h-full items-center justify-center"><Loading /></div> : (
         <div className="w-full max-w-[500px]">
             <h1 className="text-xl font-bold">{defaultValue ? "商品を編集する" : "出品する"}</h1>
             <form onSubmit={onSubmit}>
