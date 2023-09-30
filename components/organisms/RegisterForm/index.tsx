@@ -6,6 +6,7 @@ import { ImageInput } from "@/components/atoms/ImageInput";
 import { Loading } from "@/components/atoms/Loading";
 import { Select } from "@/components/atoms/Select";
 import { TextArea } from "@/components/atoms/TextArea";
+import { Toast } from "@/components/atoms/Toast";
 import { InputContainer } from "@/components/molecules/InputContainer";
 import { TextInput } from "@/components/molecules/TextInput";
 import { cities } from "@/constants";
@@ -73,19 +74,26 @@ export const RegisterForm = ({ categories, defaultValue }: RegisterProps) => {
     const [isLoading, setIsLoading] = useState(false)
     const { upload } = useUpload()
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+    const [error, setError] = useState("")
 
     const mutation = useMutation({
         mutationFn: async (data: PostItemPayload | PatchItemPayload) => {
             const res = await fetch(`/api/items/${defaultValue ? "edit" : "create"}`, { method: defaultValue ? "PATCH" : "POST", body: JSON.stringify({...data, id: defaultValue?.id}) })
             const parsed = await res.json()
+            if (!parsed.id) throw new Error(parsed?.error || "予期せぬエラーが発生しました")
             router.push(`/articles/${parsed.id}`)
         },
     })
 
     const onSubmit = handleSubmit(async data => {
         setIsLoading(true)
-        const fileUrl = await upload(Array.from(data.image))
-        fileUrl && await mutation.mutateAsync({...data, image: fileUrl})
+        try {
+            const fileUrl = await upload(Array.from(data.image))
+            fileUrl && await mutation.mutateAsync({...data, image: fileUrl})
+        } catch (e: any) {
+            setIsLoading(false)
+            setError(e.message)
+        }
     });
 
     return isLoading ? <div className="flex h-full items-center justify-center"><Loading /></div> : (
@@ -140,6 +148,7 @@ export const RegisterForm = ({ categories, defaultValue }: RegisterProps) => {
                 </div>
                 <Button type="submit" className="w-full mt-10">{defaultValue ? "商品情報を更新する" : "出品する"}</Button>
             </form>
+            <Toast isShown={Boolean(error)}>{error}</Toast>
         </div>
     )
 }

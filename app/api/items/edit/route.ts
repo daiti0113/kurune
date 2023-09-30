@@ -14,8 +14,8 @@ export async function PATCH(request: NextRequest) {
         const res = await patchItem({...rest, password: hashedPassword})
         console.log({res})
         return NextResponse.json(res)
-    } catch (e) {
+    } catch (e: any) {
         console.error(e)
-        return NextResponse.json(e)
+        return NextResponse.json({error: e.message}, {status: 403})
     }
 }
