@@ -61,7 +61,7 @@ export const CommentForm: React.FC<CommentFormProps> = ({article}) => {
         await createCommentMutation.mutateAsync(data)
         await sendEmailMutation.mutateAsync(data)
         reset()
-        router.push(`/comment/complate?item=${article.id}`)
+        router.push(`/comment/complete?item=${article.id}`)
     })
 
     return (
