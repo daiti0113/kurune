@@ -1,145 +1,154 @@
 "use client"
 
 import { Button } from "@/components/atoms/Button";
+import { CheckboxCore } from "@/components/atoms/CheckboxCore";
 import { ImageInput } from "@/components/atoms/ImageInput";
 import { Loading } from "@/components/atoms/Loading";
 import { Select } from "@/components/atoms/Select";
 import { TextArea } from "@/components/atoms/TextArea";
-import { TextInput } from "@/components/atoms/TextInput";
-import { FormControl } from "@/components/organisms/Form/FormControl";
-import { FormField } from "@/components/organisms/Form/FormField";
-import { FormLabel } from "@/components/organisms/Form/FormLabel";
-import { FormMessage } from "@/components/organisms/Form/FormMessage";
-import { FormRoot } from "@/components/organisms/Form/FormRoot";
-import { FormSubmit } from "@/components/organisms/Form/FormSubmit";
+import { Toast } from "@/components/atoms/Toast";
+import { InputContainer } from "@/components/molecules/InputContainer";
+import { TextInput } from "@/components/molecules/TextInput";
+import { cities } from "@/constants";
 import { useUpload } from "@/hooks/s3";
-import { Tag } from "@/libs/microcms";
+import { PostItemPayload, Category, Article, PatchItemPayload } from "@/libs/microcms";
 import { useMutation } from "@tanstack/react-query";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FormEventHandler, useState } from "react";
+import { useState } from "react";
+import { RegisterOptions, useForm } from "react-hook-form";
 
-type RegisterProps = {
-    tags: Tag[]
+type FormData = Omit<PostItemPayload | PatchItemPayload, "image"> & {
+    image: FileList
 }
 
-export const RegisterForm = ({ tags }: RegisterProps) => {
+type RegisterProps = {
+    categories: Category[]
+    defaultValue?: Article
+}
+
+const options: {[key in keyof FormData]?: RegisterOptions<FormData, key>} = {
+    image: {
+        required: "画像を選択してください",
+    },
+    title: {
+        required: "タイトルを入力してください"
+    },
+    price: {
+       required: "価格を入力してください",
+       valueAsNumber: true
+    },
+    cities: {
+        required: "受け渡し場所を入力してください",
+    },
+    categories:{
+       required: "カテゴリを選択してください",
+       setValueAs: (categoryId) => [categoryId],
+    },
+    description: {
+       required: "説明を入力してください",
+    },
+    name: {
+       required: "名前を入力してください",
+    },
+    email: {
+       required: "メールアドレスを入力してください",
+       pattern: {
+        value: /\S+@\S+\.\S+/,
+        message: "メールアドレスの形式が誤っています",
+      },
+    },
+    tel: {
+       required: "電話番号を入力してください",
+    },
+    agreement: {
+        required: "このサービスを利用するには、プライバシーポリシーと利用規約に同意する必要があります",
+    },
+    password: {
+        required: "商品の編集・削除に利用するパスワードを指定してください",
+    }
+}
+
+export const RegisterForm = ({ categories, defaultValue }: RegisterProps) => {
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(false)
     const { upload } = useUpload()
+    const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+    const [error, setError] = useState("")
 
     const mutation = useMutation({
-        mutationFn: async (data: any) => {
-            data = {...data, price: Number(data.price), tags: [data.tags]}
-            const res = await fetch("/api/items/create", { method: "POST", body: JSON.stringify(data) })
+        mutationFn: async (data: PostItemPayload | PatchItemPayload) => {
+            const res = await fetch(`/api/items/${defaultValue ? "edit" : "create"}`, { method: defaultValue ? "PATCH" : "POST", body: JSON.stringify({...data, id: defaultValue?.id}) })
             const parsed = await res.json()
+            if (!parsed.id) throw new Error(parsed?.error || "予期せぬエラーが発生しました")
             router.push(`/articles/${parsed.id}`)
-            setIsLoading(false)
         },
     })
-    const onSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
-        setIsLoading(true)
-        e.preventDefault()
-        const formData = new FormData(e.currentTarget)
-        const file = formData.get("image") as File
-        const fileUrl = await upload([file])
-        fileUrl && formData.set("image", fileUrl)
-        await mutation.mutateAsync(Object.fromEntries(formData))
-    }
 
-    return isLoading ? <Loading /> : (
-        <div>
-            <h1 className="text-xl font-bold">出品する</h1>
-            <FormRoot onSubmit={onSubmit}>
+    const onSubmit = handleSubmit(async data => {
+        setIsLoading(true)
+        try {
+            const fileUrl = await upload(Array.from(data.image))
+            fileUrl && await mutation.mutateAsync({...data, image: fileUrl})
+        } catch (e: any) {
+            setIsLoading(false)
+            setError(e.message)
+        }
+    });
+
+    return isLoading ? <div className="flex h-full items-center justify-center"><Loading /></div> : (
+        <div className="w-full max-w-[500px]">
+            <h1 className="text-xl font-bold">{defaultValue ? "商品を編集する" : "出品する"}</h1>
+            {defaultValue && (
+                <div className="mt-6 text-sm">
+                    <p>メールアドレスと編集用パスワードの組み合わせが正しいのみ編集が可能です。</p>
+                    <p>個人情報については、再度入力をお願いいたします。</p>
+                </div>
+            )}
+            <form onSubmit={onSubmit}>
                 <div className="mt-10">
                     <h2 className="text-lg font-bold">商品情報</h2>
                     <div className="mt-4 flex flex-col gap-10">
-                        <FormField name="image">
-                            <FormLabel>商品画像</FormLabel>
-                            <FormControl asChild>
-                                <ImageInput />
-                            </FormControl>
-                            <FormMessage match="valueMissing">
-                                画像を添付してください
-                            </FormMessage>
-                        </FormField>
-                        <FormField name="title">
-                            <FormLabel>タイトル</FormLabel>
-                            <FormControl asChild>
-                                <TextInput required />
-                            </FormControl>
-                            <FormMessage match="valueMissing">
-                                タイトルを入力してください
-                            </FormMessage>
-                        </FormField>
-                        <FormField name="price">
-                            <FormLabel>価格</FormLabel>
-                            <FormControl asChild>
-                                <TextInput required type="number" />
-                            </FormControl>
-                            <FormMessage match="valueMissing">
-                                タイトルを入力してください
-                            </FormMessage>
-                        </FormField>
-                        <FormField name="tags">
-                            <FormLabel>カテゴリ（複数選択可）</FormLabel>
-                            <FormControl asChild>
-                                <Select required>
-                                    {tags.map((tag) => <option key={tag.id} label={tag.name} value={tag.id} />)}
-                                </Select>
-                            </FormControl>
-                            <FormMessage match="valueMissing">
-                                タイトルを入力してください
-                            </FormMessage>
-                        </FormField>
-                        <FormField name="description">
-                            <FormLabel>説明</FormLabel>
-                            <FormControl asChild>
-                                <TextArea required />
-                            </FormControl>
-                            <FormMessage match="valueMissing">
-                                説明を入力してください
-                            </FormMessage>
-                        </FormField>
+                        <InputContainer label="商品画像" errorMessage={errors.image?.message}>
+                            <ImageInput {...register("image", options.image)} />
+                            {defaultValue && <span className="text-warn-500 text-sm">画像は毎回選択する必要があります</span>}
+                        </InputContainer>
+                        <TextInput label="タイトル" errorMessage={errors.title?.message} {...register("title", options.title)} defaultValue={defaultValue?.title} />
+                        <TextInput label="価格" errorMessage={errors.price?.message} type="number" {...register("price", options.price)} defaultValue={defaultValue?.price} />
+                        <InputContainer label="受け渡し場所（複数選択可）" errorMessage={errors.cities?.message}>
+                            <Select multiple {...register("cities", options.cities)} defaultValue={defaultValue?.cities}>
+                                {cities.map((city) => <option key={city.id} value={city.name}>{city.name}</option>)}
+                            </Select>
+                        </InputContainer>
+                        <InputContainer label="カテゴリ" errorMessage={errors.categories?.message}>
+                            <Select {...register("categories", options.categories)} defaultValue={defaultValue?.categories?.[0].id}>
+                                {categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}
+                            </Select>
+                        </InputContainer>
+                        <InputContainer label="説明" errorMessage={errors.description?.message}>
+                            <TextArea {...register("description", options.description)} defaultValue={defaultValue?.description} />
+                        </InputContainer>
                     </div>
                 </div>
                 <div className="mt-20">
                     <h2 className="text-lg font-bold">出品者情報</h2>
                     <div className="mt-4 flex flex-col gap-10">
-                        <FormField name="name">
-                            <FormLabel>名前</FormLabel>
-                            <FormControl asChild>
-                                <TextInput required />
-                            </FormControl>
-                            <FormMessage match="valueMissing">
-                                名前を入力してください
-                            </FormMessage>
-                        </FormField>
-                        <FormField name="email">
-                            <FormLabel>メールアドレス</FormLabel>
-                            <FormControl asChild>
-                                <TextInput type="email" required />
-                            </FormControl>
-                            <FormMessage match="valueMissing">
-                                メールアドレスを入力してください
-                            </FormMessage>
-                            <FormMessage match="typeMismatch">メールアドレスの形式が誤っています</FormMessage>
-                        </FormField>
-                        <FormField name="tel">
-                            <FormLabel>電話番号</FormLabel>
-                            <FormControl asChild>
-                                <TextInput type="tel" required />
-                            </FormControl>
-                            <FormMessage match="valueMissing">
-                                電話番号を入力してください
-                            </FormMessage>
-                            <FormMessage match="typeMismatch">電話番号の形式が誤っています</FormMessage>
-                        </FormField>
+                        <TextInput label="名前" errorMessage={errors.name?.message} {...register("name", options.name)} />
+                        <TextInput label="メールアドレス" errorMessage={errors.email?.message} type="email" {...register("email", options.email)} />
+                        <TextInput label="電話番号" errorMessage={errors.tel?.message} type="tel" {...register("tel", options.tel)} />
                     </div>
                 </div>
-                <FormSubmit asChild className="mt-20">
-                    <Button>出品する</Button>
-                </FormSubmit>
-            </FormRoot>
+                <div className="mt-20">
+                    <div className="mt-4 flex flex-col gap-10">
+                        <TextInput type="password" autoComplete="off" label="編集用パスワード" errorMessage={errors.password?.message} {...register("password", options.password)} />
+                        <InputContainer errorMessage={errors.agreement?.message} >
+                            <CheckboxCore {...register("agreement", options.agreement)} label={<><Link href={"/privacy"} target="_blank" className="text-primary-500 underline">プライバシーポリシー</Link>、<Link href={"/tos"} target="_blank" className="text-primary-500 underline">利用規約</Link> に同意する</>} />
+                        </InputContainer>
+                    </div>
+                </div>
+                <Button type="submit" className="w-full mt-10">{defaultValue ? "商品情報を更新する" : "出品する"}</Button>
+            </form>
+            <Toast isShown={Boolean(error)}>{error}</Toast>
         </div>
     )
 }

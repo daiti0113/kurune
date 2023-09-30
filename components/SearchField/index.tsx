@@ -2,7 +2,7 @@
 
 import { useCallback, useRef, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import styles from './index.module.css';
+
 
 export default function SearchField() {
   const [composing, setComposition] = useState(false);
@@ -14,25 +14,28 @@ export default function SearchField() {
         location.href = `/search?q=${inputRef.current?.value}`;
       }
     },
-    [composing],
+    [composing]
   );
+  const onClick = () => {
+    location.href = `/search?q=${inputRef.current?.value}`;
+  }
   const inputRef = useRef<HTMLInputElement>(null);
   const searchParams = useSearchParams();
   const defaultQuery = searchParams.get('q') || '';
   return (
-    <label className="flex pr-6 pl-4 border-2 rounded-3xl border-black max-w-xl w-full h-10 items-center">
-      <div className="bg-[url('/search.svg')] bg-no-repeat h-4 w-4" />
+    <div className="flex pr-1 pl-4 border-2 rounded-full border-black max-w-xl w-full h-10 items-center">
       <input
         type="search"
         name="q"
         ref={inputRef}
-        className="pl-2 focus:outline-none"
+        className="w-full pl-2 focus:outline-none"
         placeholder="Search..."
         onKeyDown={_onEnter}
         onCompositionStart={startComposition}
         onCompositionEnd={endComposition}
         defaultValue={defaultQuery}
       />
-    </label>
+      <div className="bg-[url('/search.svg')] bg-no-repeat h-4 w-4 bg-primary-500 p-4 bg-center rounded-full" onClick={onClick} />
+    </div>
   );
 }

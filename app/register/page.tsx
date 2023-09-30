@@ -1,11 +1,14 @@
 import { RegisterForm } from "@/components/organisms/RegisterForm";
-import { LIMIT } from "@/constants";
-import { getTagList } from "@/libs/microcms";
+import { getCategoryList } from "@/libs/microcms";
 
 export default async function Register() {
-    const { contents } = await getTagList({
-        limit: LIMIT,
+    const { contents } = await getCategoryList({
+        limit: 100,
     });
 
-    return <RegisterForm tags={contents} />
+    return (
+        <div className="flex justify-center">
+            <RegisterForm categories={contents} />
+        </div>
+    )
 }

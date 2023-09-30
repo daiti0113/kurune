@@ -1,6 +1,6 @@
 import { Article, Comment } from "./microcms"
 
-export type NotifyEmailPostPayload = {
+export type PostEmailNotifyPayload = {
     article: Article
     comment: Comment
 }

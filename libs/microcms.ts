@@ -1,43 +1,41 @@
 import { createClient } from 'microcms-js-sdk';
 import type {
   MicroCMSQueries,
-  MicroCMSImage,
   MicroCMSDate,
   MicroCMSContentId,
 } from 'microcms-js-sdk';
 import { notFound } from 'next/navigation';
+import { cityNameList } from '@/constants';
 
 // タグの型定義
-export type Tag = {
+export type Category = {
   name: string;
 } & MicroCMSContentId &
   MicroCMSDate;
 
-// TODO: 使っていないので後で削除する
-// ライターの型定義
-export type Seller = {
-  name: string
-  email: string
-  tel: string
-  profile: string;
-  image?: MicroCMSImage;
-} & MicroCMSContentId &
-  MicroCMSDate;
-
+  
 // 商品の型定義
 export type Item = {
   name: string
   price: number
+  cities: typeof cityNameList
   email: string
   tel: string
   title: string;
   description: string;
-  content: string;
-  thumbnail?: MicroCMSImage;
-  tags?: Tag[];
-  seller?: Seller;
+  categories?: Category[];
   image?: string;
+  agreement: boolean;
+  password: string;
 };
+
+export type Comment = {
+  name: string
+  email: string
+  tel: string
+  comment: string
+  agreement: boolean
+}
 
 export type Article = Item & MicroCMSContentId & MicroCMSDate;
 
@@ -80,10 +78,10 @@ export const getDetail = async (contentId: string, queries?: MicroCMSQueries) =>
 };
 
 // タグの一覧を取得
-export const getTagList = async (queries?: MicroCMSQueries) => {
+export const getCategoryList = async (queries?: MicroCMSQueries) => {
   const listData = await client
-    .getList<Tag>({
-      endpoint: 'tags',
+    .getList<Category>({
+      endpoint: 'categories',
       queries,
     })
     .catch(notFound);
@@ -92,10 +90,10 @@ export const getTagList = async (queries?: MicroCMSQueries) => {
 };
 
 // タグの詳細を取得
-export const getTag = async (contentId: string, queries?: MicroCMSQueries) => {
+export const getCategory = async (contentId: string, queries?: MicroCMSQueries) => {
   const detailData = await client
-    .getListDetail<Tag>({
-      endpoint: 'tags',
+    .getListDetail<Category>({
+      endpoint: 'categories',
       contentId,
       queries,
     })
@@ -104,14 +102,11 @@ export const getTag = async (contentId: string, queries?: MicroCMSQueries) => {
   return detailData;
 };
 
-export type Comment = {
-  name: string
-  email: string
-  tel: string
-  comment: string
+export type PostItemPayload = Omit<Item, "categories" | "seller"> & {
+  categories: string[]
 }
 
-export const postItem = async (data: Item) => {
+export const postItem = async (data: PostItemPayload) => {
   const detailData = await client
     .create({
       endpoint: 'items',
@@ -120,7 +115,24 @@ export const postItem = async (data: Item) => {
   return detailData;
 };
 
-export const postComment = async (data: Comment) => {
+export type PatchItemPayload = Omit<Item, "categories" | "seller"> & {
+  id: string
+  categories: string[]
+}
+
+export const patchItem = async ({id: contentId, ...data}: PatchItemPayload) => {
+  const detailData = await client
+    .update({
+      endpoint: 'items',
+      contentId,
+      content: data
+    })
+  return detailData;
+};
+
+export type PostCommentPayload = Comment
+
+export const postComment = async (data: PostCommentPayload) => {
   const detailData = await client
     .create({
       endpoint: 'comments',

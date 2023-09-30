@@ -1,6 +1,6 @@
 import { Resend } from 'resend';
 import { NextRequest, NextResponse } from 'next/server';
-import { NotifyEmailPostPayload } from '@/libs/kuruneApi';
+import { PostEmailNotifyPayload } from '@/libs/kuruneApi';
 import { Article, Comment } from '@/libs/microcms';
 
 const createContent = (article: Article, comment: Comment) => {
@@ -19,7 +19,7 @@ const createContent = (article: Article, comment: Comment) => {
 }
 
 export async function POST(request: NextRequest) {
-    const body = await request.json() as NotifyEmailPostPayload
+    const body = await request.json() as PostEmailNotifyPayload
     console.log({body})
 
     try {

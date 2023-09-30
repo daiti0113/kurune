@@ -11,7 +11,7 @@ export const PrimaryButton: React.FC<PrimaryButtonProps> = ({ children, classNam
             isLoading={isLoading}
             {...props}
         >
-            {isLoading ? <Loading className="h-8 w-8 fill-primary-500" /> : children}
+            {isLoading ? <div className="flex justify-center"><Loading className="h-8 w-8 fill-primary-500" /></div> : children}
         </ButtonCore>
     )
 }

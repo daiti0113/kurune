@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Article } from '@/libs/microcms';
-import TagList from '../TagList';
+import CategoryList from '../CategoryList';
 
 type Props = {
   article: Article;
@@ -26,8 +26,6 @@ export default function ArticleListItem({ article }: Props) {
               src={article.image || `/noimage.png`}
               alt=""
               className="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
-              width={article.thumbnail?.width}
-              height={article.thumbnail?.height}
             />
           </picture>
         ) : (
@@ -40,14 +38,17 @@ export default function ArticleListItem({ article }: Props) {
           />
         )}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50"></div>
-        <span className="relative mr-3 mb-3 inline-block rounded-lg border border-gray-500 px-2 py-1 text-xs text-gray-200 font-semibold backdrop-blur-lg md:px-3 md:text-sm">¥{article.price.toLocaleString()}</span>
+        <span className="relative mr-3 mb-3 inline-block rounded-lg border border-gray-500 px-2 py-1 text-sm text-gray-200 font-semibold backdrop-blur-lg md:px-3 md:text-md">¥{article.price.toLocaleString()}</span>
       </Link>
       <dl>
-          <dt className="text-md font-bold md:text-lg lg:text-xl">{article.title}</dt>
-          <dd>
-            <TagList tags={article.tags} hasLink={false} />
-          </dd>
-        </dl>
+        <dt className="text-md font-bold md:text-lg lg:text-xl">{article.title}</dt>
+        <dd>
+          <div className="flex gap-2 mt-1">
+            {article.cities.map((cityName) => <span key={cityName} className="text-sm">{cityName}</span>)}
+          </div>
+          <CategoryList categories={article.categories} hasLink={false} />
+        </dd>
+      </dl>
     </div>
   );
 }
