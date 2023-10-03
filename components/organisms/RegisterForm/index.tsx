@@ -114,7 +114,7 @@ export const RegisterForm = ({ categories, defaultValue }: RegisterProps) => {
                             {defaultValue && <span className="text-warn-500 text-sm">画像は毎回選択する必要があります</span>}
                         </InputContainer>
                         <TextInput label="タイトル" errorMessage={errors.title?.message} {...register("title", options.title)} defaultValue={defaultValue?.title} />
-                        <TextInput label="価格" errorMessage={errors.price?.message} type="number" {...register("price", options.price)} defaultValue={defaultValue?.price} />
+                        <TextInput label="価格" unit="円" errorMessage={errors.price?.message} type="number" {...register("price", options.price)} defaultValue={defaultValue?.price} />
                         <InputContainer label="受け渡し場所（複数選択可）" errorMessage={errors.cities?.message}>
                             <Select multiple {...register("cities", options.cities)} defaultValue={defaultValue?.cities}>
                                 {cities.map((city) => <option key={city.id} value={city.name}>{city.name}</option>)}
