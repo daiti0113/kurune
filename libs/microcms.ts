@@ -35,6 +35,7 @@ export type Comment = {
   tel: string
   comment: string
   agreement: boolean
+  item: Item[]
 }
 
 export type Article = Item & MicroCMSContentId & MicroCMSDate;
@@ -130,7 +131,9 @@ export const patchItem = async ({id: contentId, ...data}: PatchItemPayload) => {
   return detailData;
 };
 
-export type PostCommentPayload = Comment
+export type PostCommentPayload = Omit<Comment, "item"> & {
+  item: string
+}
 
 export const postComment = async (data: PostCommentPayload) => {
   const detailData = await client
