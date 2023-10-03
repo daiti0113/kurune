@@ -31,6 +31,7 @@ export const useUpload = () => {
           return createImageUrl(Key)
         } catch (e) {
           console.log(e)
+          throw e
         }
       }, [])
 

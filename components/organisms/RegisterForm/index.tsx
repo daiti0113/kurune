@@ -88,8 +88,8 @@ export const RegisterForm = ({ categories, defaultValue }: RegisterProps) => {
     const onSubmit = handleSubmit(async data => {
         setIsLoading(true)
         try {
-            const fileUrl = await upload(Array.from(data.image))
-            fileUrl && await mutation.mutateAsync({...data, image: fileUrl})
+            const fileUrl = data.image.length > 0 ? await upload(Array.from(data.image)) : undefined
+            await mutation.mutateAsync({...data, image: fileUrl || undefined})
         } catch (e: any) {
             setIsLoading(false)
             setError(e.message)
@@ -110,8 +110,7 @@ export const RegisterForm = ({ categories, defaultValue }: RegisterProps) => {
                     <h2 className="text-lg font-bold">商品情報</h2>
                     <div className="mt-4 flex flex-col gap-10">
                         <InputContainer label="商品画像" errorMessage={errors.image?.message}>
-                            <ImageInput {...register("image", options.image)} />
-                            {defaultValue && <span className="text-warn-500 text-sm">画像は毎回選択する必要があります</span>}
+                            <ImageInput {...register("image", defaultValue ? undefined : options.image)} />
                         </InputContainer>
                         <TextInput label="タイトル" errorMessage={errors.title?.message} {...register("title", options.title)} defaultValue={defaultValue?.title} />
                         <TextInput label="価格" unit="円" errorMessage={errors.price?.message} type="number" {...register("price", options.price)} defaultValue={defaultValue?.price} />
