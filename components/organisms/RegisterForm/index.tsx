@@ -140,7 +140,7 @@ export const RegisterForm = ({ categories, defaultValue }: RegisterProps) => {
                 </div>
                 <div className="mt-20">
                     <div className="mt-4 flex flex-col gap-10">
-                        <TextInput type="password" autoComplete="off" label="編集用パスワード" errorMessage={errors.password?.message} {...register("password", options.password)} />
+                        <TextInput type="password" autoComplete="off" label="編集用パスワード" errorMessage={errors.password?.message} description="※出品した商品を編集する際に必要になります" {...register("password", options.password)} />
                         <InputContainer errorMessage={errors.agreement?.message} >
                             <CheckboxCore {...register("agreement", options.agreement)} label={<><Link href={"/privacy"} target="_blank" className="text-primary-500 underline">プライバシーポリシー</Link>、<Link href={"/tos"} target="_blank" className="text-primary-500 underline">利用規約</Link> に同意する</>} />
                         </InputContainer>

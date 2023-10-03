@@ -7,9 +7,10 @@ export type InputContainerProps = {
     errorMessage?: string
     children?: React.ReactNode
     unit?: string
+    description?: string
 }
 
-export const InputContainer: React.FC<InputContainerProps> = ({ label, errorMessage, children, unit }) => {
+export const InputContainer: React.FC<InputContainerProps> = ({ label, errorMessage, children, unit, description }) => {
     return (
         <div className={classNames("max-w-[500px]", unit && "w-[60%]")}>
             <Label>{label}</Label>
@@ -17,6 +18,7 @@ export const InputContainer: React.FC<InputContainerProps> = ({ label, errorMess
                 {children}
                 {unit && <span>{unit}</span>}
             </div>
+            {description && <Message variant="info">{description}</Message>}
             {errorMessage && <Message>{errorMessage}</Message>}
         </div>
     )

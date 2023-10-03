@@ -4,9 +4,9 @@ import { InputContainer, InputContainerProps } from "../InputContainer"
 
 type TextInputProps = TextInputCoreProps & InputContainerProps
 
-export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(function TextInputInner({errorMessage, label, unit, ...props}, ref) {
+export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(function TextInputInner({errorMessage, label, unit, description, ...props}, ref) {
     return (
-        <InputContainer label={label} errorMessage={errorMessage} unit={unit}>
+        <InputContainer label={label} errorMessage={errorMessage} unit={unit} description={description}>
             <TextInputCore {...props} ref={ref} />
         </InputContainer>
     )
