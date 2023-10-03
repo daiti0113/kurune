@@ -47,12 +47,12 @@ export const CommentForm: React.FC<CommentFormProps> = ({article}) => {
     const router = useRouter()
 
     const createCommentMutation = useMutation({
-        mutationFn: async (data: PostCommentPayload) => {
-            const res = await fetch("/api/comments/create", { method: "POST", body: JSON.stringify(data) })
+        mutationFn: async (data: Omit<Comment, "item">) => {
+            const res = await fetch("/api/comments/create", { method: "POST", body: JSON.stringify({...data, item: article.id}) })
         },
     })
     const sendEmailMutation = useMutation({
-        mutationFn: async (comment: Comment) => {
+        mutationFn: async (comment: Omit<Comment, "item">) => {
             const res = await fetch("/api/notify/email", { method: "POST", body: JSON.stringify({article, comment} as PostEmailNotifyPayload) })
         },
     })

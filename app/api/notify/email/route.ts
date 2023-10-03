@@ -1,9 +1,8 @@
 import { Resend } from 'resend';
 import { NextRequest, NextResponse } from 'next/server';
 import { PostEmailNotifyPayload } from '@/libs/kuruneApi';
-import { Article, Comment } from '@/libs/microcms';
 
-const createContent = (article: Article, comment: Comment) => {
+const createContent = ({ article, comment }: PostEmailNotifyPayload) => {
     const articleUrl = `${process.env.BASE_URL}/articles/${article.id}`
     return (
         `<p><strong>※本メールは通知専用です。<br />こちらのメールには返信できませんのでご注意ください。</strong></p>
@@ -28,7 +27,7 @@ export async function POST(request: NextRequest) {
             from: 'kurune-notify@omochi-okinawa.com',
             to: body.article.email,
             subject: `【${body.article.title}に関するお問い合わせ】${body.comment.name}さんからコメントが来ています`,
-            html: createContent(body.article, body.comment)
+            html: createContent(body)
         });
         console.log({res})
         return NextResponse.json({message: "success"})
