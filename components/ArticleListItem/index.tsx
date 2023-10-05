@@ -32,7 +32,8 @@ export default function ArticleListItem({ article }: Props) {
                 ref={ref}
                 onPointerEnter={() => ref.current?.play()}
                 onPointerLeave={() => ref.current?.pause()}
-                src={`${article.image}#t=0,5`}
+                controlsList="nofullscreen"
+                src={`${article.image}#t=0.001,5`}
                 className="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
               />
             )
