@@ -26,11 +26,22 @@ export default function Article({ data }: Props) {
             type="image/webp"
             srcSet={`${data.image}?fm=webp&fit=crop&w=960&h=504 1x, ${data.image}?fm=webp&fit=crop&w=960&h=504&dpr=2 2x`}
           />
-          <img
-            src={data.image}
-            alt=""
-            className={styles.thumbnail}
-          />
+          {/.(avi|mp4|mov|wmv|flv|mpg)$/i.test(data.image)
+            ? (
+              <video
+                controls
+                autoPlay
+                src={data.image}
+                className={styles.thumbnail}
+              />
+            )
+            : (
+              <img
+                src={data.image}
+                alt={data.title}
+                className={styles.thumbnail}
+              />
+            ) }
         </picture>
         <div className="flex-1 w-full">
           <h1 className="text-xl font-bold">{data.title}</h1>

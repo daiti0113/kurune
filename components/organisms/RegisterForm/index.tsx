@@ -31,7 +31,8 @@ type RegisterProps = {
 
 const options: {[key in keyof FormData]?: RegisterOptions<FormData, key>} = {
     image: {
-        required: "画像を選択してください",
+        required: "画像または動画を選択してください",
+        validate: (files: FileList) => files[0].size < 512000000 || "512MB 以下のファイルを選択してください"
     },
     title: {
         required: "タイトルを入力してください"
@@ -79,7 +80,7 @@ export const RegisterForm = ({ categories, defaultValue }: RegisterProps) => {
     const [error, setError] = useState("")
 
     const mutation = useMutation({
-        mutationFn: async (data: PostItemPayload | PatchItemPayload) => {
+        mutationFn: async (data: PostItemPayload | Omit<PatchItemPayload, "id">) => {
             const res = await fetch(`/api/items/${defaultValue ? "edit" : "create"}`, { method: defaultValue ? "PATCH" : "POST", body: JSON.stringify({...data, id: defaultValue?.id}) })
             const parsed = await res.json()
             if (!parsed.id) throw new Error(parsed?.error || "予期せぬエラーが発生しました")
@@ -111,7 +112,7 @@ export const RegisterForm = ({ categories, defaultValue }: RegisterProps) => {
                 <div className="mt-10">
                     <h2 className="text-lg font-bold">商品情報</h2>
                     <div className="mt-4 flex flex-col gap-10">
-                        <InputContainer label="商品画像" errorMessage={errors.image?.message}>
+                        <InputContainer label="商品画像または動画" errorMessage={errors.image?.message}>
                             <ImageInput {...register("image", defaultValue ? undefined : options.image)} />
                         </InputContainer>
                         <TextInput label="タイトル" errorMessage={errors.title?.message} {...register("title", options.title)} defaultValue={defaultValue?.title} />

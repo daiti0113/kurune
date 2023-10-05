@@ -24,7 +24,7 @@ export type Item = {
   title: string;
   description: string;
   categories?: Category[];
-  image?: string;
+  image: string;
   agreement: boolean;
   password: string;
 };
@@ -122,8 +122,9 @@ export const postItem = async (data: PostItemPayload) => {
   return detailData;
 };
 
-export type PatchItemPayload = Omit<Item, "categories" | "seller"> & {
+export type PatchItemPayload = Omit<Item, "categories" | "seller" | "image"> & {
   id: string
+  image?: string
   categories: string[]
 }
 

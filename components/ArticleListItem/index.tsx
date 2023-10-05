@@ -1,13 +1,17 @@
+"use client"
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { Article } from '@/libs/microcms';
 import CategoryList from '../CategoryList';
+import { useRef } from 'react';
 
 type Props = {
   article: Article;
 };
 
 export default function ArticleListItem({ article }: Props) {
+  const ref = useRef<HTMLVideoElement>(null)
   return (
     <div>
       <Link href={`/articles/${article.id}`} className="group relative flex h-48 mb-2 items-end justify-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-96">
@@ -22,11 +26,23 @@ export default function ArticleListItem({ article }: Props) {
               type="image/webp"
               srcSet={`${article.image}?fm=webp&fit=crop&w=240&h=126 1x, ${article.image}?fm=webp&fit=crop&w=240&h=126&dpr=2 2x`}
             />
-            <img
-              src={article.image || `/noimage.png`}
-              alt=""
-              className="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
-            />
+            {/.(avi|mp4|mov|wmv|flv|mpg)$/i.test(article.image)
+            ? (
+              <video
+                ref={ref}
+                onPointerEnter={() => ref.current?.play()}
+                onPointerLeave={() => ref.current?.pause()}
+                src={`${article.image}#t=0,5`}
+                className="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
+              />
+            )
+            : (
+              <img
+                src={article.image}
+                alt={article.title}
+                className="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
+              />
+            ) }
           </picture>
         ) : (
           <Image
