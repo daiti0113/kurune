@@ -26,7 +26,7 @@ export default function ArticleListItem({ article }: Props) {
               type="image/webp"
               srcSet={`${article.image}?fm=webp&fit=crop&w=240&h=126 1x, ${article.image}?fm=webp&fit=crop&w=240&h=126&dpr=2 2x`}
             />
-            {/.(avi|mp4|mov|wmv|flv|mpg)$/i.test(article.image)
+            {/.(avi|mp4|mov|wmv|flv|mpg|quicktime)$/i.test(article.image)
             ? (
               <video
                 ref={ref}
