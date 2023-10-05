@@ -13,7 +13,6 @@ export default function CommentComplete() {
       <h1 className="text-lg font-bold text-center md:text-xl">お問い合わせが完了しました</h1>
 
       <p className="mt-6 text-center">
-        <span className="inline-block">お問い合わせが完了しました。</span>
         <span className="inline-block">記入いただいたメールアドレス宛に</span>
         <span className="inline-block">内容確認メールを送信いたしました。</span>
         <span className="inline-block">ご確認のうえ、出品者からのご連絡をお待ち下さい。</span>
