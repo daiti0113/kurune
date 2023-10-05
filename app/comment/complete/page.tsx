@@ -14,7 +14,9 @@ export default function CommentComplete() {
 
       <p className="mt-6 text-center">
         <span className="inline-block">お問い合わせが完了しました。</span>
-        <span className="inline-block">出品者からのご連絡をお待ち下さい。</span>
+        <span className="inline-block">記入いただいたメールアドレス宛に</span>
+        <span className="inline-block">内容確認メールを送信いたしました。</span>
+        <span className="inline-block">ご確認のうえ、出品者からのご連絡をお待ち下さい。</span>
       </p>
       {itemId && (
         <div className="flex items-center justify-center mt-20">
