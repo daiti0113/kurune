@@ -8,13 +8,13 @@ const createContentForSeller = ({ article, comment }: PostEmailNotifyPayload) =>
         <p>以下の商品について、お問い合わせがありました。</p>
 
         <h2>商品情報</h2>
-        <p><strong>【タイトル】</strong>${article.title}</p>
-        <p><strong>【価格】</strong>${article.price.toLocaleString()}</p>
+        <p><strong>【タイトル】</strong><br />${article.title}</p>
+        <p><strong>【価格】</strong><br />${article.price.toLocaleString()}</p>
 
         <h2>お問い合わせ内容</h2>
         <p>下記のメールアドレスに直接ご連絡ください。</p>
-        <p><strong>【氏名】</strong>${comment.name}</p>
-        <p><strong>【メールアドレス】</strong>${comment.email}</p>
+        <p><strong>【氏名】</strong><br />${comment.name}</p>
+        <p><strong>【メールアドレス】</strong><br />${comment.email}</p>
         <p><strong>【内容】</strong></p>
         <p>${comment.comment}</p>`
     )
@@ -24,9 +24,11 @@ const createContentForBuyer = ({ article, comment }: PostEmailNotifyPayload) => 
     const articleUrl = `${process.env.BASE_URL}/articles/${article.id}`
     return (
         `<p>以下の投稿について、お問い合わせが完了しました。</p>
-        <a href="${articleUrl}">${articleUrl}</a>
         <p>出品者からのご連絡をお待ち下さい。</p>
+        <a href="${articleUrl}">${articleUrl}</a>
         <h2>お問い合わせ内容</h2>
+        <p><strong>【氏名】</strong><br />${comment.name}</p>
+        <p><strong>【メールアドレス】</strong><br />${comment.email}</p>
         <p>${comment.comment}</p>`
     )
 }
