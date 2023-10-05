@@ -18,6 +18,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { RegisterOptions, useForm } from "react-hook-form";
 
+export const revalidate = 0;
+
 type FormData = Omit<PostItemPayload | PatchItemPayload, "image"> & {
     image: FileList
 }

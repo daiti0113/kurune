@@ -10,6 +10,8 @@ type Props = {
   data: Article;
 };
 
+export const revalidate = 0;
+
 export default function Article({ data }: Props) {
   return (
     <main className={styles.main}>
