@@ -4,14 +4,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Article } from '@/libs/microcms';
 import CategoryList from '../CategoryList';
-import { useRef } from 'react';
 
 type Props = {
   article: Article;
 };
 
 export default function ArticleListItem({ article }: Props) {
-  const ref = useRef<HTMLVideoElement>(null)
   return (
     <div>
       <Link href={`/articles/${article.id}`} className="group relative flex h-48 mb-2 items-end justify-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-96">
@@ -29,9 +27,6 @@ export default function ArticleListItem({ article }: Props) {
             {/.(avi|mp4|mov|wmv|flv|mpg|quicktime)$/i.test(article.image)
             ? (
               <video
-                ref={ref}
-                onPointerEnter={() => ref.current?.play()}
-                onPointerLeave={() => ref.current?.pause()}
                 controlsList="nofullscreen"
                 muted
                 src={`${article.image}#t=0.001,5`}
