@@ -60,6 +60,9 @@ export const getList = async (queries?: MicroCMSQueries) => {
     .getList<Item>({
       endpoint: 'items',
       queries,
+      customRequestInit: {
+        cache: "no-store", // キャッシュを利用せずに常に新しいデータを取得する
+      },
     })
     .catch(notFound);
   return listData;
@@ -72,6 +75,9 @@ export const getDetail = async (contentId: string, queries?: MicroCMSQueries) =>
       endpoint: 'items',
       contentId,
       queries,
+      customRequestInit: {
+        cache: "no-store", // キャッシュを利用せずに常に新しいデータを取得する
+      },
     })
     .catch(notFound);
 
