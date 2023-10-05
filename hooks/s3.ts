@@ -41,7 +41,9 @@ export const useUpload = () => {
 const generateFileName = (file: File) => {
   const name = crypto.randomUUID()
   const extension = file.type.replace(/(.*)\//g, '')
-  return `${name}.${extension}`
+  // .quicktime が iOS Safari で再生できなかったため .mov に変換
+  const converted = extension === ".quicktime" ? ".mov" : extension
+  return `${name}.${converted}`
 }
 
 const createImageUrl = (Key: string) => {
