@@ -24,7 +24,7 @@ export type Item = {
   title: string;
   description: string;
   categories?: Category[];
-  image?: string;
+  image: string;
   agreement: boolean;
   password: string;
 };
@@ -60,6 +60,9 @@ export const getList = async (queries?: MicroCMSQueries) => {
     .getList<Item>({
       endpoint: 'items',
       queries,
+      customRequestInit: {
+        cache: "no-store", // キャッシュを利用せずに常に新しいデータを取得する
+      },
     })
     .catch(notFound);
   return listData;
@@ -72,6 +75,9 @@ export const getDetail = async (contentId: string, queries?: MicroCMSQueries) =>
       endpoint: 'items',
       contentId,
       queries,
+      customRequestInit: {
+        cache: "no-store", // キャッシュを利用せずに常に新しいデータを取得する
+      },
     })
     .catch(notFound);
 
@@ -116,8 +122,9 @@ export const postItem = async (data: PostItemPayload) => {
   return detailData;
 };
 
-export type PatchItemPayload = Omit<Item, "categories" | "seller"> & {
+export type PatchItemPayload = Omit<Item, "categories" | "seller" | "image"> & {
   id: string
+  image?: string
   categories: string[]
 }
 

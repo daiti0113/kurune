@@ -1,3 +1,5 @@
+"use client"
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { Article } from '@/libs/microcms';
@@ -22,11 +24,22 @@ export default function ArticleListItem({ article }: Props) {
               type="image/webp"
               srcSet={`${article.image}?fm=webp&fit=crop&w=240&h=126 1x, ${article.image}?fm=webp&fit=crop&w=240&h=126&dpr=2 2x`}
             />
-            <img
-              src={article.image || `/noimage.png`}
-              alt=""
-              className="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
-            />
+            {/.(avi|mp4|mov|wmv|flv|mpg|quicktime)$/i.test(article.image)
+            ? (
+              <video
+                controlsList="nofullscreen"
+                muted
+                src={`${article.image}#t=0.001,5`}
+                className="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
+              />
+            )
+            : (
+              <img
+                src={article.image}
+                alt={article.title}
+                className="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
+              />
+            ) }
           </picture>
         ) : (
           <Image

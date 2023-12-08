@@ -18,6 +18,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { RegisterOptions, useForm } from "react-hook-form";
 
+export const revalidate = 0;
+
 type FormData = Omit<PostItemPayload | PatchItemPayload, "image"> & {
     image: FileList
 }
@@ -29,7 +31,8 @@ type RegisterProps = {
 
 const options: {[key in keyof FormData]?: RegisterOptions<FormData, key>} = {
     image: {
-        required: "画像を選択してください",
+        required: "画像または動画を選択してください",
+        validate: (files: FileList) => files[0].size < 512000000 || "512MB 以下のファイルを選択してください"
     },
     title: {
         required: "タイトルを入力してください"
@@ -77,7 +80,7 @@ export const RegisterForm = ({ categories, defaultValue }: RegisterProps) => {
     const [error, setError] = useState("")
 
     const mutation = useMutation({
-        mutationFn: async (data: PostItemPayload | PatchItemPayload) => {
+        mutationFn: async (data: PostItemPayload | Omit<PatchItemPayload, "id">) => {
             const res = await fetch(`/api/items/${defaultValue ? "edit" : "create"}`, { method: defaultValue ? "PATCH" : "POST", body: JSON.stringify({...data, id: defaultValue?.id}) })
             const parsed = await res.json()
             if (!parsed.id) throw new Error(parsed?.error || "予期せぬエラーが発生しました")
@@ -88,8 +91,8 @@ export const RegisterForm = ({ categories, defaultValue }: RegisterProps) => {
     const onSubmit = handleSubmit(async data => {
         setIsLoading(true)
         try {
-            const fileUrl = await upload(Array.from(data.image))
-            fileUrl && await mutation.mutateAsync({...data, image: fileUrl})
+            const fileUrl = data.image.length > 0 ? await upload(Array.from(data.image)) : undefined
+            await mutation.mutateAsync({...data, image: fileUrl || undefined})
         } catch (e: any) {
             setIsLoading(false)
             setError(e.message)
@@ -109,12 +112,11 @@ export const RegisterForm = ({ categories, defaultValue }: RegisterProps) => {
                 <div className="mt-10">
                     <h2 className="text-lg font-bold">商品情報</h2>
                     <div className="mt-4 flex flex-col gap-10">
-                        <InputContainer label="商品画像" errorMessage={errors.image?.message}>
-                            <ImageInput {...register("image", options.image)} />
-                            {defaultValue && <span className="text-warn-500 text-sm">画像は毎回選択する必要があります</span>}
+                        <InputContainer label="商品画像または動画" errorMessage={errors.image?.message}>
+                            <ImageInput {...register("image", defaultValue ? undefined : options.image)} />
                         </InputContainer>
                         <TextInput label="タイトル" errorMessage={errors.title?.message} {...register("title", options.title)} defaultValue={defaultValue?.title} />
-                        <TextInput label="価格" errorMessage={errors.price?.message} type="number" {...register("price", options.price)} defaultValue={defaultValue?.price} />
+                        <TextInput label="価格" unit="円" errorMessage={errors.price?.message} type="number" {...register("price", options.price)} defaultValue={defaultValue?.price} />
                         <InputContainer label="受け渡し場所（複数選択可）" errorMessage={errors.cities?.message}>
                             <Select multiple {...register("cities", options.cities)} defaultValue={defaultValue?.cities}>
                                 {cities.map((city) => <option key={city.id} value={city.name}>{city.name}</option>)}
@@ -140,7 +142,7 @@ export const RegisterForm = ({ categories, defaultValue }: RegisterProps) => {
                 </div>
                 <div className="mt-20">
                     <div className="mt-4 flex flex-col gap-10">
-                        <TextInput type="password" autoComplete="off" label="編集用パスワード" errorMessage={errors.password?.message} {...register("password", options.password)} />
+                        <TextInput type="password" autoComplete="off" label="編集用パスワード" errorMessage={errors.password?.message} description="※出品した商品を編集する際に必要になります" {...register("password", options.password)} />
                         <InputContainer errorMessage={errors.agreement?.message} >
                             <CheckboxCore {...register("agreement", options.agreement)} label={<><Link href={"/privacy"} target="_blank" className="text-primary-500 underline">プライバシーポリシー</Link>、<Link href={"/tos"} target="_blank" className="text-primary-500 underline">利用規約</Link> に同意する</>} />
                         </InputContainer>
