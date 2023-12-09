@@ -13,7 +13,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const dynamicPaths = contents.map(({ id }) => {
     return {
-      url: `${ baseURL }/${id}`,
+      url: `${ baseURL }/articles/${id}`,
       lastModified
     }
   })
