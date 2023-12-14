@@ -7,17 +7,13 @@ export async function GET() {
   console.log({baseURL})
   const MICROCMS_SERVICE_DOMAIN = process.env.MICROCMS_SERVICE_DOMAIN
   const MICROCMS_API_KEY = process.env.MICROCMS_API_KEY
+  console.log({MICROCMS_SERVICE_DOMAIN, MICROCMS_API_KEY})
   
   let test: Array<any> = []
-  try {
-    console.log({MICROCMS_SERVICE_DOMAIN, MICROCMS_API_KEY})
-    const { contents } = await getList()
-    test = contents
-    console.log({contents})
-  } catch (error) {
-    console.error({error})
-  }
-  
+  const { contents } = await getList()
+  test = contents
+  console.log({contents})
+
   const lastmod = new Date().toISOString()
   console.log({lastmod})
 
