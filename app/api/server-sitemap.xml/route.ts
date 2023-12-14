@@ -2,6 +2,7 @@ import { getList } from '@/libs/microcms'
 import { getServerSideSitemap } from 'next-sitemap'
 
 export async function GET() {
+  console.log("GET!!! /api/server-sitemap.xml")
   const baseURL = process.env.BASE_URL || ''
   const { contents } = await getList()
   const lastmod = new Date().toISOString()
