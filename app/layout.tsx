@@ -11,11 +11,11 @@ import Analytics from "@/components/Analytics";
 
 export const metadata = {
   metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
-  title: 'kurune | 沖縄のフリマサイト',
-  description: '【会員登録不要】手渡しのみの沖縄県限定フリマサイトです。',
+  title: 'kurune - 沖縄県内限定の手渡しフリマサイト',
+  description: 'kuruneは、古着・ハンドメイドを中心とした沖縄の商品が一覧できるフリマサイトです。会員登録が不要で、取引手数料等もかからないため、お気軽に出品いただけます。',
   openGraph: {
-    title: 'kurune | 沖縄のフリマサイト',
-    description: '沖縄県限定の手渡し専用フリマサイトです。',
+    title: 'kurune - 沖縄県内限定の手渡しフリマサイト',
+    description: 'kuruneは、古着・ハンドメイドを中心とした沖縄の商品が一覧できるフリマサイトです。会員登録が不要で、取引手数料等もかからないため、お気軽に出品いただけます。',
     images: '/logo.png',
   },
   alternates: {

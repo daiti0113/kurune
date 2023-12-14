@@ -10,7 +10,7 @@ export default function PublishedDate({ date }: Props) {
   return (
     <span className={styles.date}>
       <Image src="/clock.svg" alt="" width={16} height={16} priority />
-      {formatDate(date)}
+      <time dateTime={date} itemProp="modified">{formatDate(date)}</time>
     </span>
   );
 }
