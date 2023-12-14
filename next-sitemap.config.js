@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-    siteUrl: process.env.BASE_URL || 'https://kurune.okinawa',
+    siteUrl: process.env.BASE_URL || 'https://www.kurune.okinawa',
     generateRobotsTxt: true,
     exclude: ['/server-sitemap.xml'],
     robotsTxtOptions: {
