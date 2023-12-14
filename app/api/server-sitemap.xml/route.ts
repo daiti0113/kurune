@@ -5,13 +5,19 @@ export async function GET() {
   console.log("GET!!! /api/server-sitemap.xml")
   const baseURL = process.env.BASE_URL || ''
   console.log({baseURL})
-  const { contents } = await getList()
-  console.log({contents})
+  let test: Array<any> = []
+  try {
+    const { contents } = await getList()
+    test = contents
+    console.log({contents})
+  } catch (error) {
+    console.log({error})
+  }
+  
   const lastmod = new Date().toISOString()
   console.log({lastmod})
 
-
-  const dynamicPaths = contents.map(({ id }) => {
+  const dynamicPaths = test.map(({ id }) => {
     return {
       loc: `${ baseURL }/articles/${id}`,
       lastmod
