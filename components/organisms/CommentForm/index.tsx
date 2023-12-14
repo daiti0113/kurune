@@ -66,7 +66,7 @@ export const CommentForm: React.FC<CommentFormProps> = ({article}) => {
 
     return (
         <div className="mt-16">
-            <h1 className="text-2xl font-bold text-neutral-400">購入希望またはお問い合わせの連絡をする</h1>
+            <h2 className="text-2xl font-bold text-neutral-400">購入希望またはお問い合わせの連絡をする</h2>
             <form onSubmit={onSubmit}>
                 <div>
                     <div className="mt-4 flex flex-col gap-10">

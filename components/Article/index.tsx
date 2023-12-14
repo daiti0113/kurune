@@ -47,8 +47,9 @@ export default function Article({ data }: Props) {
         <div className="flex-1 w-full">
           <h1 className="text-xl font-bold">{data.title}</h1>
           <span className="mt-2 text-neutral-600">¥<span className="text-3xl font-semibold text-primary-500">{data.price.toLocaleString()}</span></span>
+          <h2 className="mt-12 text-2xl font-bold text-neutral-400">商品説明</h2>
           <div>
-            <p className="mt-6 mb-16 whitespace-pre-wrap">{data.description}</p>
+            <p className="mt-4 mb-16 whitespace-pre-wrap">{data.description}</p>
           </div>
           <PublishedDate date={data.publishedAt || data.createdAt} />
           <Link href={`/articles/${data.id}/edit`} className="text-primary-500 underline">商品を編集する</Link>
