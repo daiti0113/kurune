@@ -1,23 +1,18 @@
-import { getList } from '@/libs/microcms'
+import { client } from '@/libs/microcms'
 import { getServerSideSitemap } from 'next-sitemap'
 
 export async function GET() {
   console.log("GET!!! /api/server-sitemap.xml")
   const baseURL = process.env.BASE_URL || ''
   console.log({baseURL})
-  const MICROCMS_SERVICE_DOMAIN = process.env.MICROCMS_SERVICE_DOMAIN
-  const MICROCMS_API_KEY = process.env.MICROCMS_API_KEY
-  console.log({MICROCMS_SERVICE_DOMAIN, MICROCMS_API_KEY})
-  
-  let test: Array<any> = []
-  const { contents } = await getList()
-  test = contents
-  console.log({contents})
+
+  const itemIds = await client.getAllContentIds({endpoint: 'items'})
+  console.log({itemIds})
 
   const lastmod = new Date().toISOString()
   console.log({lastmod})
 
-  const dynamicPaths = test.map(({ id }) => {
+  const dynamicPaths = itemIds.map((id) => {
     return {
       loc: `${ baseURL }/articles/${id}`,
       lastmod
