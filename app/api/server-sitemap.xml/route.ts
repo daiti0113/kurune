@@ -1,15 +1,14 @@
-import { client } from '@/libs/microcms'
+import { client, Item } from '@/libs/microcms'
 import { getServerSideSitemap } from 'next-sitemap'
 
 export async function GET() {
     const baseURL = process.env.BASE_URL || ''
-    const itemIds = await client.getAllContentIds({endpoint: 'items'})
-    const lastmod = new Date().toISOString()
+    const { contents } = await client.getList<Item>({endpoint: 'items'})
 
-    const dynamicPaths = itemIds.map((id) => {
+    const dynamicPaths = contents.map(({id, updatedAt }) => {
         return {
             loc: `${ baseURL }/articles/${id}`,
-            lastmod
+            lastmod: updatedAt
         }
     })
 
