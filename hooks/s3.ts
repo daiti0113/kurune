@@ -6,20 +6,20 @@ import { useCallback, useState } from "react"
 export const useUpload = () => {
     const [isLoading, setIsLoading] = useState(false)
 
-    const upload = useCallback(async (acceptedFiles: File[]) => {
+    const upload = useCallback(async (acceptedFile: Blob) => {
         if (!process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID || !process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY) return null
         setIsLoading(true)
-        const file = acceptedFiles[0]
+        const blob = acceptedFile
         const creds = new Credentials(
           process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID,
           process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY
         )
     
         try {
-          const Key = generateFileName(file)
+          const Key = generateFileName(blob)
           const parallelUploads3 = new Upload({
             client: new S3Client({ region: "ap-northeast-1", credentials: creds }),
-            params: { Bucket: process.env.NEXT_PUBLIC_AWS_S3_BUCKET_NAME, Key, Body: file },
+            params: { Bucket: process.env.NEXT_PUBLIC_AWS_S3_BUCKET_NAME, Key, Body: blob },
             leavePartsOnError: false,
           })
           parallelUploads3.on("httpUploadProgress", (progress) => {
@@ -38,9 +38,9 @@ export const useUpload = () => {
       return { upload, isLoading }
 }
 
-const generateFileName = (file: File) => {
+const generateFileName = (blob: Blob) => {
   const name = crypto.randomUUID()
-  const extension = file.type.replace(/(.*)\//g, '')
+  const extension = blob.type.replace(/(.*)\//g, '')
   // .quicktime が iOS Safari で再生できなかったため .mov に変換
   const converted = extension === ".quicktime" ? ".mov" : extension
   return `${name}.${converted}`

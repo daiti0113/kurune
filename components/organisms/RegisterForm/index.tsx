@@ -11,6 +11,7 @@ import { InputContainer } from "@/components/molecules/InputContainer";
 import { TextInput } from "@/components/molecules/TextInput";
 import { cities } from "@/constants";
 import { useUpload } from "@/hooks/s3";
+import { compressImage } from "@/libs/image";
 import { PostItemPayload, Category, Article, PatchItemPayload } from "@/libs/microcms";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
@@ -90,8 +91,9 @@ export const RegisterForm = ({ categories, defaultValue }: RegisterProps) => {
 
     const onSubmit = handleSubmit(async data => {
         setIsLoading(true)
+        const compressed = await compressImage(data.image[0])
         try {
-            const fileUrl = data.image.length > 0 ? await upload(Array.from(data.image)) : undefined
+            const fileUrl = data.image.length > 0 ? await upload(compressed) : undefined
             await mutation.mutateAsync({...data, image: fileUrl || undefined})
         } catch (e: any) {
             setIsLoading(false)
