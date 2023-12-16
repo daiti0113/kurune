@@ -11,6 +11,7 @@ import { InputContainer } from "@/components/molecules/InputContainer";
 import { TextInput } from "@/components/molecules/TextInput";
 import { cities } from "@/constants";
 import { useUpload } from "@/hooks/s3";
+import { compressImage } from "@/libs/image";
 import { PostItemPayload, Category, Article, PatchItemPayload } from "@/libs/microcms";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
@@ -32,7 +33,7 @@ type RegisterProps = {
 const options: {[key in keyof FormData]?: RegisterOptions<FormData, key>} = {
     image: {
         required: "画像または動画を選択してください",
-        validate: (files: FileList) => files[0].size < 512000000 || "512MB 以下のファイルを選択してください"
+        validate: (files: FileList) => files[0].size < 128000000 || "128MB 以下のファイルを選択してください"
     },
     title: {
         required: "タイトルを入力してください"
@@ -90,8 +91,9 @@ export const RegisterForm = ({ categories, defaultValue }: RegisterProps) => {
 
     const onSubmit = handleSubmit(async data => {
         setIsLoading(true)
+        const compressed = (/.(avi|mp4|mov|wmv|flv|mpg|quicktime)$/i.test(data.image.item(0)?.name || "")) ? data.image[0] : await compressImage(data.image[0])
         try {
-            const fileUrl = data.image.length > 0 ? await upload(Array.from(data.image)) : undefined
+            const fileUrl = data.image.length > 0 ? await upload(compressed) : undefined
             await mutation.mutateAsync({...data, image: fileUrl || undefined})
         } catch (e: any) {
             setIsLoading(false)

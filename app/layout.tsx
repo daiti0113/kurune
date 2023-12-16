@@ -8,6 +8,8 @@ import { Suspense } from 'react';
 import { Loading } from '@/components/atoms/Loading';
 import { Providers } from './Providers';
 import Analytics from "@/components/Analytics";
+import Link from 'next/link';
+import { Button } from '@/components/atoms/Button';
 
 export const metadata = {
   metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
@@ -47,9 +49,12 @@ export default async function RootLayout({ children }: Props) {
           </Suspense>
           <Header />
           <Nav categories={categories.contents} />
-          <Suspense fallback={<div className="flex h-full items-center justify-center"><Loading /></div>}>
-            <main className="flex flex-col flex-1 px-6">{children}</main>
-          </Suspense>
+          <Link href="/register" className="self-center mb-10"><Button>商品を出品する</Button></Link>
+          <main className="flex flex-col flex-1 px-6">
+            <Suspense fallback={<div className="flex h-full items-center justify-center"><Loading /></div>}>
+              {children}
+            </Suspense>
+          </main>
           <Footer />
         </body>
       </html>
