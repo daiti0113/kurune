@@ -34,9 +34,11 @@ export default function ArticleListItem({ article }: Props) {
               />
             )
             : (
-              <img
+              <Image
                 src={article.image}
                 alt={article.title}
+                width="1080"
+                height="810"
                 className="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
               />
             ) }
