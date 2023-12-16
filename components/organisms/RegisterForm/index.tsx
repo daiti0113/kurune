@@ -91,7 +91,7 @@ export const RegisterForm = ({ categories, defaultValue }: RegisterProps) => {
 
     const onSubmit = handleSubmit(async data => {
         setIsLoading(true)
-        const compressed = await compressImage(data.image[0])
+        const compressed = (/.(avi|mp4|mov|wmv|flv|mpg|quicktime)$/i.test(data.image.item(0)?.name || "")) ? data.image[0] : await compressImage(data.image[0])
         try {
             const fileUrl = data.image.length > 0 ? await upload(compressed) : undefined
             await mutation.mutateAsync({...data, image: fileUrl || undefined})
