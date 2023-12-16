@@ -8,4 +8,7 @@ const withPWA = require("next-pwa")({
 
 module.exports = withPWA({
     reactStrictMode: true,
+    images: {
+        domains: ["kurune-images-dev.s3.ap-northeast-1.amazonaws.com"],
+    },
 })

@@ -5,6 +5,7 @@ import CategoryList from '../CategoryList';
 import { CommentForm } from '../organisms/CommentForm';
 import Link from 'next/link';
 import { Divider } from '../atoms/Divider';
+import Image from 'next/image';
 
 type Props = {
   data: Article;
@@ -30,16 +31,17 @@ export default function Article({ data }: Props) {
             ? (
               <video
                 controls
-                autoPlay
                 muted
                 src={data.image}
                 className={styles.thumbnail}
               />
             )
             : (
-              <img
+              <Image
                 src={data.image}
                 alt={data.title}
+                width="1080"
+                height="1350"
                 className={styles.thumbnail}
               />
             ) }
