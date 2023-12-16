@@ -30,7 +30,6 @@ export default function Article({ data }: Props) {
             ? (
               <video
                 controls
-                autoPlay
                 muted
                 src={data.image}
                 className={styles.thumbnail}
