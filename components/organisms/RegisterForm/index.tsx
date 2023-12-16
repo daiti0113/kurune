@@ -33,7 +33,7 @@ type RegisterProps = {
 const options: {[key in keyof FormData]?: RegisterOptions<FormData, key>} = {
     image: {
         required: "画像または動画を選択してください",
-        validate: (files: FileList) => files[0].size < 512000000 || "512MB 以下のファイルを選択してください"
+        validate: (files: FileList) => files[0].size < 128000000 || "128MB 以下のファイルを選択してください"
     },
     title: {
         required: "タイトルを入力してください"
