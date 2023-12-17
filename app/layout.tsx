@@ -23,6 +23,12 @@ export const metadata = {
   alternates: {
     canonical: '/',
   },
+  twitter: {
+    card: "summary",
+    site: process.env.BASE_URL || "https://kurune.okinawa",
+    title: 'kurune - 沖縄県内限定の手渡しフリマサイト',
+    images: "/ogp.png"
+  }
 };
 
 type Props = {
