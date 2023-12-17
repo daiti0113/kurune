@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 const INSTAGRAM_BUSINESS_ID = process.env.INSTAGRAM_BUSINESS_ID
-const INSTAGRAM_ACCESS_TOKEN = process.env
+const INSTAGRAM_ACCESS_TOKEN = process.env.INSTAGRAM_ACCESS_TOKEN
 
 const method = "POST"
 const headers = {
