@@ -12,6 +12,9 @@ const headers = {
     'Authorization': 'Bearer ' + INSTAGRAM_ACCESS_TOKEN,
 }
 
+const createCaption = (itemInfo: Item, itemId: string) => {
+    return `.\n${itemInfo.title}\n¥${itemInfo.price.toLocaleString()}\n\n【商品説明】\n${itemInfo.description}\n\n※商品に関するお問い合わせはkurune公式サイトよりお願いいたします。\n\n---\n\n沖縄限定の手渡しフリマサイト『kurune』\nkuruneは、古着・ハンドメイドを中心とした沖縄の商品が一覧できるフリマサイトです。会員登録が不要で、取引手数料等もかからないため、お気軽に出品いただけます。\n\n公式サイトは @kurune.okinawa のリンクから飛べます！`
+}
 
 export async function POST(request: NextRequest) {
     const data = await request.json()
@@ -26,7 +29,7 @@ export async function POST(request: NextRequest) {
 
     const params = {
         image_url: itemInfo.image,
-        caption: `.\nAPIからのテスト投稿\n詳細はこちら > https://${process.env.BASE_URL}/articles/${itemId}`,
+        caption: createCaption(itemInfo, itemId),
         media_type: ""
     }
 
