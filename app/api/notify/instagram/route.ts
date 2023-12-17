@@ -19,6 +19,10 @@ const params = {
 export async function POST(request: NextRequest) {
     console.log({request})
     console.log({requestBody: request.body})
+    const data = await request.json()
+    console.log({data})
+    console.log({contents: data?.contents})
+    console.log({new: data?.new})
     try {
         const res = await fetch(`https://graph.facebook.com/v18.0/${INSTAGRAM_BUSINESS_ID}/media?access_token`, {
             method,
