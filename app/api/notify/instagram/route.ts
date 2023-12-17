@@ -13,7 +13,7 @@ const headers = {
 }
 
 const createCaption = (itemInfo: Item, itemId: string) => {
-    return `.\n${itemInfo.title}\n¥${itemInfo.price.toLocaleString()}\n\n【商品説明】\n${itemInfo.description}\n\n※商品に関するお問い合わせはkurune公式サイト(@kurune.okinawa に記載のリンク)よりお願いいたします。\n\n---\n\n沖縄限定の手渡しフリマサイト『kurune』\n\nkuruneは、古着・ハンドメイドを中心とした沖縄の商品が一覧できるフリマサイトです。\n会員登録が不要で、取引手数料等もかからないため、お気軽に出品いただけます！\n\n#kurune.okinawa\n#kurune_新着\n${itemInfo.categories?.map((category) => `#kurune_${category.name}`).join("\n")}`
+    return `.\n${itemInfo.title}\n¥${itemInfo.price.toLocaleString()}\n\n【商品説明】\n${itemInfo.description}\n\n※商品に関するお問い合わせはkurune公式サイト(@kurune.okinawa に記載のリンク)よりお願いいたします。\n\n---\n\n沖縄限定の手渡しフリマサイト『kurune』\n\nkuruneは、古着・ハンドメイドを中心とした沖縄の商品が一覧できるフリマサイトです。\n会員登録が不要で、取引手数料等もかからないため、お気軽に出品いただけます！\n\n#kurune\n#kurune_新着\n${itemInfo.categories?.map((category) => `#kurune_${category.name}`).join("\n")}`
 }
 
 export async function POST(request: NextRequest) {
