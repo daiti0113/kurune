@@ -18,7 +18,7 @@ export const metadata = {
   openGraph: {
     title: 'kurune - 沖縄県内限定の手渡しフリマサイト',
     description: 'kuruneは、古着・ハンドメイドを中心とした沖縄の商品が一覧できるフリマサイトです。会員登録が不要で、取引手数料等もかからないため、お気軽に出品いただけます。',
-    images: '/logo.png',
+    images: '/ogp.png',
   },
   alternates: {
     canonical: '/',
