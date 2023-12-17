@@ -1,3 +1,4 @@
+import { Item } from '@/libs/microcms';
 import { NextRequest, NextResponse } from 'next/server';
 
 const INSTAGRAM_BUSINESS_ID = process.env.INSTAGRAM_BUSINESS_ID
@@ -10,19 +11,25 @@ const headers = {
     "Content-Type": "application/json",
     'Authorization': 'Bearer ' + INSTAGRAM_ACCESS_TOKEN,
 }
-const params = {
-    image_url: "https://kurune-images.s3.ap-northeast-1.amazonaws.com/1d3be049-2f09-445c-913d-496c4e6b9cea.jpeg",
-    caption: "APIからのテスト投稿",
-    media_type: ""
-}
+
 
 export async function POST(request: NextRequest) {
-    console.log({request})
-    console.log({requestBody: request.body})
     const data = await request.json()
     console.log({data})
     console.log({contents: data?.contents})
-    console.log({new: data?.new})
+    console.log({new: data?.contents?.new})
+
+    if (data.type !== "new") return NextResponse.json({message: "success"})
+
+    const itemId = data.contents.new.id
+    const itemInfo = data.contents.new.publishValue as Item
+
+    const params = {
+        image_url: itemInfo.image,
+        caption: `.\nAPIからのテスト投稿\n詳細はこちら > https://${process.env.BASE_URL}/articles/${itemId}`,
+        media_type: ""
+    }
+
     try {
         const res = await fetch(`https://graph.facebook.com/v18.0/${INSTAGRAM_BUSINESS_ID}/media?access_token`, {
             method,
