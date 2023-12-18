@@ -65,7 +65,14 @@ export default function Article({ data }: Props) {
             </div>
           </div>
           <Divider className="my-10" />
-          <CommentForm article={data} />
+          {data.sold
+            ? (
+              <div className="mb-20">
+                <h2 className="text-xl font-bold text-primary-500 sm:text-2xl lg:text-3xl">Thank you! SOLD OUT!</h2>
+                <span className="text-gray-500">この商品は販売終了しました。</span>
+              </div>
+            )
+            : <CommentForm article={data} />}
         </div>
       </div>
     </main>
