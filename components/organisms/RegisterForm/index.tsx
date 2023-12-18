@@ -91,9 +91,12 @@ export const RegisterForm = ({ categories, defaultValue }: RegisterProps) => {
 
     const onSubmit = handleSubmit(async data => {
         setIsLoading(true)
-        const compressed = (/.(avi|mp4|mov|wmv|flv|mpg|quicktime)$/i.test(data.image.item(0)?.name || "")) ? data.image[0] : await compressImage(data.image[0])
+        let fileUrl: string | null = null
+        if (data.image.length > 0) {
+            const compressed = (/.(avi|mp4|mov|wmv|flv|mpg|quicktime)$/i.test(data.image.item(0)?.name || "")) ? data.image[0] : await compressImage(data.image[0])
+            fileUrl = await upload(compressed)
+        }
         try {
-            const fileUrl = data.image.length > 0 ? await upload(compressed) : undefined
             await mutation.mutateAsync({...data, image: fileUrl || undefined})
         } catch (e: any) {
             setIsLoading(false)
@@ -150,6 +153,11 @@ export const RegisterForm = ({ categories, defaultValue }: RegisterProps) => {
                         </InputContainer>
                     </div>
                 </div>
+                {defaultValue && (
+                    <InputContainer className="mt-10" >
+                        <CheckboxCore {...register("sold")} label={<span className="font-semibold">この商品を販売終了にする</span>} />
+                    </InputContainer>
+                )}
                 <Button type="submit" className="w-full mt-10">{defaultValue ? "商品情報を更新する" : "出品する"}</Button>
             </form>
             <Toast isShown={Boolean(error)}>{error}</Toast>
