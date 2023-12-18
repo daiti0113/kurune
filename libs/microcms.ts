@@ -27,6 +27,7 @@ export type Item = {
   image: string;
   agreement: boolean;
   password: string;
+  sold: boolean;
 };
 
 export type Comment = {
