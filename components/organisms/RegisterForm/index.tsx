@@ -153,6 +153,11 @@ export const RegisterForm = ({ categories, defaultValue }: RegisterProps) => {
                         </InputContainer>
                     </div>
                 </div>
+                {defaultValue && (
+                    <InputContainer className="mt-10" >
+                        <CheckboxCore {...register("sold")} label={<span className="font-semibold">この商品を販売終了にする</span>} />
+                    </InputContainer>
+                )}
                 <Button type="submit" className="w-full mt-10">{defaultValue ? "商品情報を更新する" : "出品する"}</Button>
             </form>
             <Toast isShown={Boolean(error)}>{error}</Toast>
