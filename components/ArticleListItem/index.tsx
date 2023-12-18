@@ -82,11 +82,11 @@ const Ribbon = ({label}: {label: string}) => {
       className={`
         w-[100px] h-[100px] overflow-hidden absolute
         top-[-10px] left-[-10px] z-10
-        before:absolute before:z-0 before:content-[''] before:block before:border-t-[5px] before:border-r-[5px] before:border-b-[5px] before:border-l-[5px] before:border-[#2980b9] before:border-t-transparent before:border-l-transparent before:top-0 before:right-0
-        after:absolute after:z-0 after:content-[''] after:block after:border-t-[5px] after:border-r-[5px] after:border-b-[5px] after:border-l-[5px] after:border-[#2980b9] after:border-t-transparent after:border-l-transparent after:left-0 after:bottom-0
+        before:absolute before:z-0 before:content-[''] before:block before:border-t-[5px] before:border-r-[5px] before:border-b-[5px] before:border-l-[5px] before:border-warn-900 before:border-t-transparent before:border-l-transparent before:top-0 before:right-0
+        after:absolute after:z-0 after:content-[''] after:block after:border-t-[5px] after:border-r-[5px] after:border-b-[5px] after:border-l-[5px] after:border-warn-900 after:border-t-transparent after:border-l-transparent after:left-0 after:bottom-0
       `}
     >
-      <span className="absolute block text-sm w-[230px] py-[5px] bg-[#3498db] shadow-md text-white text-center right-[-55px] top-[25px] -rotate-45">
+      <span className="absolute block text-sm w-[230px] py-[5px] bg-warn-500 shadow-md text-white text-center right-[-55px] top-[25px] -rotate-45">
         {label}
       </span>
     </div>
