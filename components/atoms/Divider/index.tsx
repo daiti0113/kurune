@@ -6,6 +6,9 @@ type DividerProps = {
 
 export const Divider: React.FC<DividerProps> = ({className}) => {
     return (
-        <div className={classNames("h-[1px] w-full bg-neutral-300", className)} />
+        // Flex内でも表示されるようdivタグで囲んでいる
+        <div>
+            <div className={classNames("h-[1px] w-full bg-neutral-300", className)} />
+        </div>
     )
 }
