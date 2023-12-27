@@ -10,6 +10,8 @@ import { Providers } from './Providers';
 import Analytics from "@/components/Analytics";
 import Link from 'next/link';
 import { Button } from '@/components/atoms/Button';
+import { InstagramBanner } from '@/components/organisms/InstagramBanner';
+import { Divider } from '@/components/atoms/Divider';
 
 export const metadata = {
   metadataBase: new URL(process.env.BASE_URL || 'http://localhost:3000'),
@@ -55,6 +57,9 @@ export default async function RootLayout({ children }: Props) {
           </Suspense>
           <Header />
           <Nav categories={categories.contents} />
+          {/* MEMO: インスタグラムフォロワー獲得施策のバナー */}
+          <InstagramBanner />
+          <Divider className="my-6" />
           <Link href="/register" className="self-center mb-10"><Button>商品を出品する</Button></Link>
           <main className="flex flex-col flex-1 px-6">
             <Suspense fallback={<div className="flex h-full items-center justify-center"><Loading /></div>}>
