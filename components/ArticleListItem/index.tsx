@@ -33,7 +33,7 @@ export default function ArticleListItem({ article }: Props) {
                 controlsList="nofullscreen"
                 muted
                 src={`${article.image}#t=0.001,5`}
-                className="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
+                className="absolute inset-0 h-full w-full object-cover object-center duration-100 group-hover:opacity-50"
               />
             ) : (
               <Image
@@ -41,13 +41,13 @@ export default function ArticleListItem({ article }: Props) {
                 alt={article.title}
                 width="1080"
                 height="810"
-                className="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
+                className="absolute inset-0 h-full w-full object-cover object-center duration-100 group-hover:opacity-50"
               />
             )}
           </picture>
         ) : (
           <Image
-            className="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
+            className="absolute inset-0 h-full w-full object-cover object-center duration-100 group-hover:opacity-50"
             src="/no-image.png"
             alt="No Image"
             width={1200}
